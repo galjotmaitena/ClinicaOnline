@@ -1,0 +1,66 @@
+<form [formGroup]="form" class="registro-container">
+    <div class="contenedor">
+        <h1 style="color: #D7E3FC; font-family: 'Monaco'; margin: 3%;">Log in</h1>
+        
+        <div class="users">
+            <button class="btnLogin" (click)="cargarDatos('1')">
+                <span id="displayName" class="user-name">M</span>
+            </button>
+            <button class="btnLogin" (click)="cargarDatos('2')">
+                <span id="displayName" class="user-name">A</span>
+            </button>
+            <button class="btnLogin">
+                <span id="displayName" class="user-name">X</span>
+            </button>
+            <button class="btnLogin">
+                <span id="displayName" class="user-name">X</span>
+            </button>
+    </div>
+
+        <div class="contenedor-input row">
+            <div class="col">
+                <div class="col"> 
+                    <div class="input-field">
+                        <input type="text" required formControlName="correo" name="email" [(ngModel)]="correo" style="width: 95%;">
+                        <label>Correo electrónico</label>
+                    </div>
+                    <div class="row">
+                        <span class="msjError col" *ngIf="form.controls['correo'].touched && form.controls['correo'].hasError('required')">
+                            Campo obligatorio.
+                        </span>
+                        <span class="msjError col" *ngIf="form.controls['correo'].touched && form.controls['correo'].hasError('invalido')">
+                            Correo electrónico invalida.
+                        </span>
+                    </div>
+                </div> 
+            </div>
+        </div>
+
+        <div class="contenedor-input row">
+            <div class="col">
+                <div class="col"> 
+                    <div class="input-field">
+                        <input type="password" required formControlName="clave" name="pass1" [(ngModel)]="clave" style="width: 95%;">
+                        <label>Contraseña</label>
+                    </div>
+                    <div class="row">
+                        <span class="msjError col" *ngIf="form.controls['clave'].touched && form.controls['clave'].hasError('required')">
+                            Campo obligatorio.
+                        </span>
+                        <span class="msjError col" *ngIf="form.controls['clave'].touched && form.controls['clave'].hasError('invalido')">
+                            Contraseña invalida.
+                        </span>
+                    </div>
+                </div> 
+            </div>
+        </div>
+
+        <button (click)="ingresar()" class="btnEspecialidades">Ingresar</button>
+
+
+    </div>
+
+    
+    <div class="toast" id="myToast" *ngIf="mostrarToast">{{mensaje}}</div>
+
+</form>

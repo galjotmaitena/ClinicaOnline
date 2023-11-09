@@ -1,0 +1,167 @@
+<form [formGroup]="form" class="registro-container">
+    <nav>
+        <div class="botones">
+            <button class="btnNav" (click)="mostrarDiv('listado')">Lista de Usuarios</button> 
+            <button class="btnNav" (click)="mostrarDiv('registro')">Registro</button>
+        </div>  
+    </nav>
+
+    <div *ngIf="mostrarListado" class="contenedor">
+        <h1 style="color: #D7E3FC; font-family: 'Monaco'; margin: 3%;">Listado Usuarios</h1>
+        <div class="usuario" *ngFor="let e of usuarios">
+            <p>{{e.apellido}} </p>
+            <p>{{e.nombre}}</p>
+            <p>{{e.dni}}</p>
+            <img class="foto" [src]="e.foto">
+            <button (click)="seleccionar('aprobado', e)" style="background-color: green; width: 3%; height: 60%; margin: 3%;"></button>
+            <button (click)="seleccionar('rechazado', e)" style="background-color: red; width: 3%; height: 60%; margin: 3%;"></button>
+        </div>
+    </div>
+
+    <div *ngIf="mostrarRegistro" class="contenedorRegistro">
+                <h1 style="color: #D7E3FC; font-family: 'Monaco'; margin: 5%;">Registro</h1>
+                <h3 class="texto">Complete con sus datos personales:</h3>
+                <div class="contenedor-input row">
+                    <div class="col">
+                        <div class="col"> 
+                            <div class="input-field">
+                                <input type="text" required formControlName="nombre" name="name" [(ngModel)]="nombre">
+                                <label>Nombre</label>
+                            </div>
+                            <div class="row">
+                                <span class="msjError col" *ngIf="form.controls['nombre'].touched && form.controls['nombre'].hasError('required')">
+                                    Campo obligatorio.
+                                </span>
+                                <span class="msjError col" *ngIf="form.controls['nombre'].touched && form.controls['nombre'].hasError('invalido')">
+                                    Nombre invalido.
+                                </span>
+                            </div>
+                        </div> 
+                    </div>
+                    <div class="col">
+                        <div class="col"> 
+                            <div class="input-field">
+                                <input type="text" required formControlName="apellido" name="surname" [(ngModel)]="apellido">
+                                <label>Apellido</label>
+                            </div>
+                            <div class="row">
+                                <span class="msjError col" *ngIf="form.controls['apellido'].touched && form.controls['apellido'].hasError('required')">
+                                    Campo obligatorio.
+                                </span>
+                                <span class="msjError col" *ngIf="form.controls['apellido'].touched && form.controls['apellido'].hasError('invalido')">
+                                    Apellido invalido.
+                                </span>
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+        
+                <div class="contenedor-input row">
+                    <div class="col">
+                        <div class="col"> 
+                            <div class="input-field">
+                                <input type="number" required formControlName="edad" name="age" [(ngModel)]="edad">
+                                <label>Edad</label>
+                            </div>
+                            <div class="row">
+                                <span class="msjError col" *ngIf="form.controls['edad'].touched && form.controls['edad'].hasError('required')">
+                                    Campo obligatorio.
+                                </span>
+                                <span class="msjError col" *ngIf="form.controls['edad'].touched && form.controls['edad'].hasError('invalido')">
+                                    Edad invalida.
+                                </span>
+                            </div>
+                        </div> 
+                    </div>
+                    <div class="col">
+                        <div class="col"> 
+                            <div class="input-field">
+                                <input type="number" required formControlName="dni" name="document" [(ngModel)]="dni">
+                                <label>DNI</label>
+                            </div>
+                            <div class="row">
+                                <span class="msjError col" *ngIf="form.controls['dni'].touched && form.controls['dni'].hasError('required')">
+                                    Campo obligatorio.
+                                </span>
+                                <span class="msjError col" *ngIf="form.controls['dni'].touched && form.controls['dni'].hasError('invalido')">
+                                    DNI invalida.
+                                </span>
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+                
+                <div class="contenedor-input row">
+                    <div class="col">
+                        <div class="col"> 
+                            <div class="input-field">
+                                <input type="text" required formControlName="correo" name="email" [(ngModel)]="correo" style="width: 95%;">
+                                <label>Correo electrónico</label>
+                            </div>
+                            <div class="row">
+                                <span class="msjError col" *ngIf="form.controls['correo'].touched && form.controls['correo'].hasError('required')">
+                                    Campo obligatorio.
+                                </span>
+                                <span class="msjError col" *ngIf="form.controls['correo'].touched && form.controls['correo'].hasError('invalido')">
+                                    Correo electrónico invalida.
+                                </span>
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+        
+                <div class="contenedor-input row">
+                    <div class="col">
+                        <div class="col"> 
+                            <div class="input-field">
+                                <input type="password" required formControlName="clave" name="pass1" [(ngModel)]="clave">
+                                <label>Contraseña</label>
+                            </div>
+                            <div class="row">
+                                <span class="msjError col" *ngIf="form.controls['clave'].touched && form.controls['clave'].hasError('required')">
+                                    Campo obligatorio.
+                                </span>
+                                <span class="msjError col" *ngIf="form.controls['clave'].touched && form.controls['clave'].hasError('invalido')">
+                                    Contraseña invalida.
+                                </span>
+                            </div>
+                        </div> 
+                    </div>
+                    <div class="col">
+                        <div class="col"> 
+                            <div class="input-field">
+                                <input type="password" required formControlName="claveRep" name="pass2" [(ngModel)]="claveRep">
+                                <label>Repetir la contraseña</label>
+                            </div>
+                            <div class="row">
+                                <span class="msjError col" *ngIf="form.controls['claveRep'].touched && form.controls['claveRep'].hasError('required')">
+                                    Campo obligatorio.
+                                </span>
+                                <span class="msjError col" *ngIf="form.controls['claveRep'].touched && form.controls['claveRep'].hasError('invalido')">
+                                    Contraseña invalida.
+                                </span>
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+        
+                <div style="flex-direction: row; display: flex;">
+                    <div class="file">
+                        <input type="file" id="file1" class="fileInput" accept=".png, .jpg, .jpeg" (click)="seleccionarFoto(1)">
+                        <!-- <label for="file1" class="labelInputFile">
+                            <img class="imgFile" src="assets/subir.png">
+                        </label> -->
+                    </div>
+                </div>
+        
+                <button (click)="alta()" class="btnEspecialidades">Registrar</button>
+        
+            </div>
+            
+            
+       
+        
+
+    <div class="toast" id="myToast" *ngIf="mostrarToast">{{mensaje}}</div>
+
+</form>
