@@ -71,6 +71,8 @@ export class LoginComponent {
     
           if(this.authService.getUser()?.emailVerified)
           {
+            this.correo = '';
+            this.clave = '';
             setTimeout(() => {
               this.router.navigate(["/home"]);
             }, 2000);
@@ -113,4 +115,6 @@ export class LoginComponent {
         break;
     }
   }
+
+
 }

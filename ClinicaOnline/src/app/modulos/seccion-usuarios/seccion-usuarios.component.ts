@@ -4,6 +4,7 @@ import { getStorage, ref, uploadBytes } from '@firebase/storage';
 import { AuthService } from 'src/app/services/auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { FormBuilder, FormGroup, Validators, AbstractControl, ValidatorFn, MinLengthValidator } from '@angular/forms';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -36,7 +37,7 @@ export class SeccionUsuariosComponent {
   foto1 : any = '';
   fotoSeleccionada1 = false;
 
-  constructor(private aFirestorage : AngularFireStorage,  private authService : AuthService, private firestoreService : FirestoreService, private formBuilder: FormBuilder)
+  constructor(private aFirestorage : AngularFireStorage,  private authService : AuthService, private firestoreService : FirestoreService, private formBuilder: FormBuilder, private router : Router)
   {
     this.form = this.formBuilder.group({
       nombre: ['', [Validators.required, this.contieneSoloLetras()]],
@@ -53,6 +54,7 @@ export class SeccionUsuariosComponent {
   {
     this.observable = this.firestoreService.traer('especialistas').subscribe((data) => {
 
+      this.usuarios = [];
       data.forEach(usuario => {
         if(!usuario.aprobado)
         {
@@ -239,5 +241,10 @@ export class SeccionUsuariosComponent {
     this.foto1 = '';
 
     this.fotoSeleccionada1 = false;
+  }
+
+  volver()
+  {
+    this.router.navigate(['/home']);
   }
 }

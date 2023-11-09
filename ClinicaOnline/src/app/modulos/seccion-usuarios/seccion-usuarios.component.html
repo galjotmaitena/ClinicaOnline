@@ -1,5 +1,9 @@
 <form [formGroup]="form" class="registro-container">
     <nav>
+        <button style="background: transparent; border: transparent; position: absolute; height: 100%; z-index: 1000;"  (click)="volver()">
+            <img  id="icon" src="assets/signo-de-hospital.png" >
+        </button>
+
         <div class="botones">
             <button class="btnNav" (click)="mostrarDiv('listado')">Lista de Usuarios</button> 
             <button class="btnNav" (click)="mostrarDiv('registro')">Registro</button>
@@ -13,8 +17,12 @@
             <p>{{e.nombre}}</p>
             <p>{{e.dni}}</p>
             <img class="foto" [src]="e.foto">
-            <button (click)="seleccionar('aprobado', e)" style="background-color: green; width: 3%; height: 60%; margin: 3%;"></button>
-            <button (click)="seleccionar('rechazado', e)" style="background-color: red; width: 3%; height: 60%; margin: 3%;"></button>
+            <button (click)="seleccionar('aprobado', e)" style="background-color: transparent; border: transparent; width: 3%; height: 60%; margin: 3%;">
+                <img src="assets/aceptar.png" style="height: 100%;">
+            </button>
+            <button (click)="seleccionar('rechazado', e)" style="background-color: transparent; border: transparent; width: 3%; height: 60%; margin: 3%;">
+                <img src="assets/rechazar.png" style="height: 140%; bottom: 15%; display: flex; position: relative;">
+            </button>
         </div>
     </div>
 

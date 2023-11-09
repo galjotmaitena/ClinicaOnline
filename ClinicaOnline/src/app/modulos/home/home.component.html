@@ -3,7 +3,7 @@
         <img id="icon" src="assets/signo-de-hospital.png">
         <h2 id="title">Bienvenido</h2>
         <div class="botones">
-            <button class="btnNav" *ngIf="esAdmin" routerLink="/seccionUsuarios">Listados</button> 
+            <button class="btnNav" *ngIf="esAdmin" routerLink="/seccionUsuarios">Seccion Usuarios</button> 
             <button class="btnNav" *ngIf="!userLogeado" routerLink="/login">Sign In</button>
             <button class="btnNav" *ngIf="!userLogeado" routerLink="/registro">Sign Up</button>
             <button class="btnNav" *ngIf="userLogeado" (click)="logout()">Log Out</button>

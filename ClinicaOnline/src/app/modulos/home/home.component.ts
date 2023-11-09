@@ -38,6 +38,7 @@ export class HomeComponent {
     this.authService.logout()
     ?.then(()=>{
       this.userLogeado = false;
+      this.esAdmin = false;
       this.usuario = "";
     })
     .catch((error)=>{

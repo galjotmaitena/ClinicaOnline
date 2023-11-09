@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { getStorage, ref, uploadBytes } from '@firebase/storage';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registro',
@@ -44,7 +45,7 @@ export class RegistroComponent {
 
   observable : any;
 
-  constructor(private aFirestorage : AngularFireStorage, private formBuilder: FormBuilder, private authService : AuthService, private firestoreService : FirestoreService)
+  constructor(private router : Router, private aFirestorage : AngularFireStorage, private formBuilder: FormBuilder, private authService : AuthService, private firestoreService : FirestoreService)
   {
     this.form = this.formBuilder.group({
       nombre: ['', [Validators.required, this.contieneSoloLetras()]],
@@ -132,6 +133,9 @@ export class RegistroComponent {
       setTimeout(() => {
         this.mostrarToast = false;
       }, 3000);
+
+      console.log(this.form.valid);
+      console.log(this.especialidad);
     }
     else
     {
@@ -198,6 +202,7 @@ export class RegistroComponent {
 
         setTimeout(() => {
           this.mostrarToast = false;
+          this.router.navigate(["/home"]);
         }, 3000);
         });
 
