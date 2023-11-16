@@ -1,33 +1,74 @@
-.registro-container{
-    //background-image: url('../../../assets/fondo2.jpg');
-    background-color: #90CAF9;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: center;
-    height: 100%;
-    width: 100%;
-    position: fixed;
-    display:flex;
-    justify-content:space-evenly;
-    align-items: center;
 
-    //flex-direction: column;
-}
 
 .contenedor{
     flex-direction: column; 
     display: flex; 
     position: relative;
-    width: 40%;
-    height: 50%;
-    background: #64B5F6;
-    border-radius: 20px;
+    width: 45%;
+    height: auto;
+    background: #0466C8;
+    border-radius: 5%;
     justify-content: center;
     align-items: center;
+    top: 20%;
 }
 
+.contenedor-gral{
+    height: 100%;
+    width: 100%;
+    display: grid;
+    place-items: center;
+}
 
+/* Estilizar el input checkbox para ocultarlo */
+input[type="radio"] {
+    display: none;
+}
+  
+/* Estilizar el label para que parezca un botón de toggle */
+.toggle-label {
+    display: inline-block;
+    width: 50px;
+    height: 20px;
+    background-color: #D7E3FC;
+    border: 2px solid #D7E3FC;
+    border-radius: 20px;
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+  
+  /* Estilo para el botón cuando el checkbox está marcado (encendido) */
+input[type="radio"]:checked + .toggle-label {
+    background-color: #4CAF50; /* Cambia el color de fondo cuando está activado */
+}
+  
+  /* Estilizar el "punto" del botón de toggle */
+.toggle-label::before {
+    content: '';
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    background-color: #D7E3FC;
+    border: 2px solid #D7E3FC;
+
+    border-radius: 50%;
+    top: -1px;
+    left: 0px;
+    transition: transform 0.3s;
+}
+  
+  /* Estilo para el "punto" cuando el checkbox está marcado (encendido) */
+input[type="radio"]:checked + .toggle-label::before {
+    transform: translateX(30px); /* Mueve el "punto" hacia la derecha cuando está activado */
+}
+  
+.toggles{
+    margin: 5px;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
 
 //txt
 
@@ -77,7 +118,7 @@ input:valid ~ label{
     left: 6%;
     font-size: 16px;
     padding: 0 2px;
-    background: #64B5F6;
+    background: #0466C8;
 }
 
 .input-field input:placeholder-shown + label {
@@ -85,7 +126,7 @@ input:valid ~ label{
   }
   
   .input-field input:focus + label {
-    background: #64B5F6;
+    background: #0466C8;
   }
 
 .texto{
@@ -97,9 +138,9 @@ input:valid ~ label{
 }
 
 .btnEspecialidades{
-    color: #64B5F6;
+    color: #0466C8;
     font-size: 19px;
-    width: 30%;
+    width: auto;
     height: auto;
     border-radius: 6px;
     font-size: 18px;
@@ -185,48 +226,4 @@ input:valid ~ label{
     to {
       opacity: 0;
     }
-}
-
-.users{
-    position: relative;
-    display: flex;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 15%;
-    margin: 10px;
-}
-
-.btnLogin{
-    display: flex;
-    background: #D7E3FC;
-    border-radius: 1000px;
-    margin: 3%;
-    margin-bottom: 8%;
-    margin-top: 5%;
-    font-family: "Monaco";
-    font-size: 20px;
-    font-weight: bold;
-    color: #0466C8;
-    //border: 2px solid #3c0a6d;
-    border: none;
-    padding: 4px;
-    text-align:center;
-    width: 9%;
-    height: 100%;
-    justify-content: center;
-    align-items: center;
-}
-
-.btnLogin:hover{
-    background: #0466C8;
-    color: #D7E3FC;
-    font-weight: bold;
-}
-
-.btnLogin:active{
-    background-color: #ABC4FF;
-    color: #023E7D;
-    font-weight: bold;
 }

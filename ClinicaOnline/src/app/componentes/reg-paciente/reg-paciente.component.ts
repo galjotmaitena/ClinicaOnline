@@ -8,11 +8,11 @@ import { getStorage, ref, uploadBytes } from '@firebase/storage';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-registro',
-  templateUrl: './registro.component.html',
-  styleUrls: ['./registro.component.scss']
+  selector: 'app-reg-paciente',
+  templateUrl: './reg-paciente.component.html',
+  styleUrls: ['./reg-paciente.component.scss']
 })
-export class RegistroComponent {
+export class RegPacienteComponent {
 
   form : FormGroup;
 

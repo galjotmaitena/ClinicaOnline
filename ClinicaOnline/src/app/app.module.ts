@@ -12,12 +12,23 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { AngularFireModule } from '@angular/fire/compat';
+import { SolicitarTurnoComponent } from './componentes/solicitar-turno/solicitar-turno.component';
+import { PacienteComponent } from './componentes/paciente/paciente.component';
+import { EspecialistaComponent } from './componentes/especialista/especialista.component';
+import { TurnosComponent } from './componentes/turnos/turnos.component';
+import { RegPacienteComponent } from './componentes/reg-paciente/reg-paciente.component';
+import { RegEspecialistaComponent } from './componentes/reg-especialista/reg-especialista.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegistroComponent,
+    SolicitarTurnoComponent,
+    EspecialistaComponent,
+    TurnosComponent,
+    RegPacienteComponent,
+    RegEspecialistaComponent,
   ],
   imports: [
     BrowserModule,

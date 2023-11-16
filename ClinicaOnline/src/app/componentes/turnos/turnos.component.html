@@ -1,0 +1,60 @@
+<div class="registro-container">
+    <nav>
+        <button style="background: transparent; border: transparent; position: absolute; height: 100%; z-index: 1000;"  (click)="volver()">
+            <img  id="icon" src="assets/signo-de-hospital.png" >
+        </button>
+        <h2 id="title">Turnos</h2>
+        <div class="botones">
+            
+        </div>         
+    </nav>
+
+    <div class="contenedor">
+        <h1 style="color: #D7E3FC; font-family: 'Monaco'; margin: 3%;">Turnos</h1>
+        <div style="flex-direction: row; display: flex;">
+            <p class="texto">Especialidad</p>
+            <div class="toggles">
+                <input type="radio" id="toggle" name="togg" (click)="seleccionarFiltro('especialidad')">
+                <label for="toggle" class="toggle-label"></label>
+            </div>
+            <p class="texto">Especialista</p>
+            <div class="toggles">
+                <input type="radio" id="toggle2" name="togg" (click)="seleccionarFiltro('especialista')">
+                <label for="toggle2" class="toggle-label"></label>
+            </div>
+            <p class="texto">Todos</p>
+            <div class="toggles">
+                <input type="radio" id="toggle3" name="togg" (click)="seleccionarFiltro('')">
+                <label for="toggle3" class="toggle-label"></label>
+            </div>
+        </div>
+    
+        <div style="width: 50%; display: flex; position: relative; justify-content: space-evenly; flex-wrap: wrap;">
+            <div *ngFor="let e of listado">
+                <button class="btnEspecialidades" (click)="filtrar(e)">{{e}}</button>
+            </div>
+        </div> 
+    
+        <div class="usuario" *ngFor="let t of turnos">
+            <p>{{t.especialidad}} </p>
+            <p>{{t.especialista}}</p>
+            <p>{{t.paciente}}</p>
+            <button class="btnEspecialidades" *ngIf="!t.realizado && !t.aceptado && !t.realizado" (click)="abrirModal(t)">Cancelar</button>
+        </div> 
+    </div>
+    
+    <div id="miModal" class="modal" *ngIf="abrir">
+        <div class="modal-contenido">
+            <span class="cerrar-modal" id="cerrarModalBtn" (click)="cerrar()">&times;</span>
+            <h2 style="color: #D7E3FC; font-family: 'Monaco'; margin: 3%;">Deje un comentario acerca de su acción</h2>
+            <div class="input-field">
+                <input type="text" id="miInput" required name="com" [(ngModel)]="comentario" style="width: 65%;">
+                <label>Comentario</label>
+            </div>
+            <button class="btnEspecialidades" id="obtenerDatoBtn" (click)="enviar()">Enviar</button>
+        </div>
+    </div>
+      
+</div>
+
+

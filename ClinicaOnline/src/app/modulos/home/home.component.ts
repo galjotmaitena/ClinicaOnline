@@ -22,9 +22,9 @@ export class HomeComponent {
     {
       this.userLogeado = true;
 
-      this.firestoreService.traer('administradores').subscribe((data)=>{
-        data.forEach(administradores => {
-          if(this.usuario === administradores.correo)
+      this.firestoreService.traer('usuarios').subscribe((data)=>{
+        data.forEach(u => {
+          if(this.usuario === u.correo && u.tipo === 'administrador')
           {
             this.esAdmin = true;
           }

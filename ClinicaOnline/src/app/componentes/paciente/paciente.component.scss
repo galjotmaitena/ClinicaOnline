@@ -1,0 +1,207 @@
+
+.contenedor{
+    flex-direction: column; 
+    display: flex; 
+    position: absolute;
+    width: 60%;
+    height: 50%;
+    background: #64B5F6;
+    border-radius: 20px;
+    justify-content: center;
+    align-items: center;
+    top: 30%;
+    left: 20%;
+}
+
+/* Estilizar el input checkbox para ocultarlo */
+input[type="radio"] {
+    display: none;
+}
+  
+/* Estilizar el label para que parezca un botón de toggle */
+.toggle-label {
+    display: inline-block;
+    width: 50px;
+    height: 20px;
+    background-color: #E3F2FD;
+    border: 2px solid #D7E3FC;
+    border-radius: 20px;
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+  
+  /* Estilo para el botón cuando el checkbox está marcado (encendido) */
+input[type="radio"]:checked + .toggle-label {
+    background-color: #4CAF50; /* Cambia el color de fondo cuando está activado */
+}
+  
+  /* Estilizar el "punto" del botón de toggle */
+.toggle-label::before {
+    content: '';
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    background-color: #E3F2FD;
+    border: 2px solid #D7E3FC;
+
+    border-radius: 50%;
+    top: -1px;
+    left: 0px;
+    transition: transform 0.3s;
+}
+  
+  /* Estilo para el "punto" cuando el checkbox está marcado (encendido) */
+input[type="radio"]:checked + .toggle-label::before {
+    transform: translateX(30px); /* Mueve el "punto" hacia la derecha cuando está activado */
+}
+  
+.toggles{
+    margin: 5px;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+.btnEspecialidades{
+    color: #0466C8;
+    font-size: 19px;
+    width: auto;
+    height: auto;
+    border-radius: 6px;
+    font-size: 18px;
+    padding: 0 15px;
+    border: 2px solid #D7E3FC;
+    background: #D7E3FC;
+    outline: none;
+    margin: 7px;
+    font-family: "Monaco";
+}
+
+.texto{
+    color: #D7E3FC;
+    font-size: 19px;
+    pointer-events: none;
+    margin-left: 15px;
+    font-family: "Monaco";
+}
+
+p{
+    color: #002855; 
+    font-family: 'Monaco';
+    font-size: 20px;
+    text-align: center;
+    margin: 0;
+}
+
+.usuario{
+    width: 90%;
+    height: 9%;
+    background: #ABC4FF;
+    margin: 3px;
+    margin-left: 10px;
+    margin-right: 10px;
+    flex-direction: row;
+    display: flex;
+    text-align: center;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+}
+
+
+
+
+
+.modal {
+  display: flex;
+  position: absolute;
+  top:0;
+  left:0;
+  width: 100%;
+  height: 100%;
+  justify-content: space-around;
+  align-items: center;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-contenido {
+  position: absolute;
+  top: 35%;
+  left: 25%;
+  background-color: #979DAC;
+  padding: 20px;
+  border: 1px solid #001233;
+  width: 50%;
+  height: 40%;
+}
+
+.cerrar-modal {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.cerrar-modal:hover {
+  color: black;
+}
+
+.contenedor-input{
+  flex-direction: row; 
+  display: flex;
+  width: 100%;
+}
+
+.input-field{
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px;
+  width: 100%;
+}
+
+.input-field input{
+  width: 90%;
+  height: 40px;
+  border-radius: 6px;
+  font-size: 18px;
+  padding: 0 15px;
+  border: 2px solid #BBDEFB;
+  background: transparent;
+  color: #BBDEFB;
+  outline: none;
+  font-family: "Monaco";
+}
+
+.input-field label{
+  position: absolute;
+  top: 50%;
+  left: 20%;
+  transform: translateY(-50%);
+  color: #BBDEFB;
+  font-size: 19px;
+  pointer-events: none;
+  transition: .3s;
+  font-family: "Monaco";
+}
+
+input:focus ~ label,
+input:valid ~ label{
+  top: 0;
+  left: 20%;
+  font-size: 16px;
+  padding: 0 2px;
+  background: #979DAC;
+}
+
+.input-field input:placeholder-shown + label {
+  transform: translateY(0);
+}
+
+.input-field input:focus + label {
+  background: #979DAC;
+}

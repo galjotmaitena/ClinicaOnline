@@ -19,10 +19,19 @@ export class LoginComponent {
   correo : string = '';
   clave : string = '';
 
-  usuarios : any[] = [];
+  especialistas : any[] = [];
   observable : any;
   esEspecialista = false;
   usuario : any = '';
+
+  btnsE : any[] = [];
+  btnsP : any[] = [];
+  btnsA : any[] = [];
+  oP : any;
+  oA : any;
+
+  accesos : any[] = [];
+  correos : any[] = ['galjotmaitena@gmail.com', 'maitegaljot02@gmail.com', 'maitebordolina02@gmail.com', 'maitenagaljot@hotmail.com'];
 
   constructor(private formBuilder: FormBuilder, private authService : AuthService, private firestoreService : FirestoreService, private router : Router)
   {
@@ -34,11 +43,18 @@ export class LoginComponent {
 
   ngOnInit()
   {
-    this.observable = this.firestoreService.traer('especialistas').subscribe((data) => {
-      this.usuarios = data;
-      
+    this.observable = this.firestoreService.traer('usuarios').subscribe((data) => {
+      data.forEach(u => {
+        if(u.tipo === 'especialista')
+        {
+          this.especialistas.push(u);
+        }
+      });
     });
 
+    this.correos.forEach(c => {
+      this.traerFotos(c);        //admin
+    });
 
   }
 
@@ -46,7 +62,7 @@ export class LoginComponent {
   {
     let user;
 
-    this.usuarios.forEach(especialista => {
+    this.especialistas.forEach(especialista => {
       if(especialista.correo === this.correo && especialista.aprobado === false)
       {
         user = especialista;
@@ -65,9 +81,9 @@ export class LoginComponent {
       }
       else
       {
+        
         this.authService.login(this.correo, this.clave)
         ?.then(()=>{
-          //this.firestoreService.guardar('logs', this.correo);
     
           if(this.authService.getUser()?.emailVerified)
           {
@@ -105,16 +121,37 @@ export class LoginComponent {
   {
     switch(user)
     {
-      case "1":
+      case "galjotmaitena@gmail.com":
         this.correo = "galjotmaitena@gmail.com";
-        this.clave = "44457866C";
+        this.clave = "maimai02";
         break;
-      case "2":
+      case "maitegaljot02@gmail.com":
+        this.correo = "maitegaljot02@gmail.com";
+        this.clave = "11111111";
+        break;
+      case "maitebordolina02@gmail.com":
         this.correo = "maitebordolina02@gmail.com";
+        this.clave = "11111111";
+        break;
+      case "maitenagaljot@hotmail.com":
+        this.correo = "maitenagaljot@hotmail.com";
         this.clave = "11111111";
         break;
     }
   }
 
+  traerFotos(correo : string)
+  {
+    let observable = this.firestoreService.traer('usuarios').subscribe((data)=>{
+      
 
+      data.forEach(u => {
+        if(u.correo === correo)
+        {
+          this.accesos.push({'correo' : correo, 'foto' : u.foto});
+          console.log(this.accesos);
+        }
+      });
+    })
+  }
 }

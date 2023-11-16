@@ -52,11 +52,11 @@ export class SeccionUsuariosComponent {
 
   ngOnInit()
   {
-    this.observable = this.firestoreService.traer('especialistas').subscribe((data) => {
+    this.observable = this.firestoreService.traer('usuarios').subscribe((data) => {
 
       this.usuarios = [];
       data.forEach(usuario => {
-        if(!usuario.aprobado)
+        if(!usuario.aprobado && usuario.tipo === 'especialista')
         {
           this.usuarios.push(usuario);
         }
@@ -95,7 +95,7 @@ export class SeccionUsuariosComponent {
       let usuario = especialista;
       usuario.aprobado = true;
   
-      this.firestoreService.modificar('especialistas', usuario).then(()=>{
+      this.firestoreService.modificar('usuarios', usuario).then(()=>{
         this.usuarios = [];
   
         this.mostrarToast = true;
@@ -177,9 +177,10 @@ export class SeccionUsuariosComponent {
                                 'dni' : this.dni, 
                                 'correo' : this.correo, 
                                 'foto' : this.foto1,
-                                'aprobado' : false};
+                                'aprobado' : false,
+                                'tipo' : 'administrador'};
           
-            this.firestoreService.guardar('administradores', especialista);
+            this.firestoreService.guardar('usuarios', especialista);
             this.authService.signUp(this.correo, this.clave);
           
             this.limpiarCampos();

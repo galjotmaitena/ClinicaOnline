@@ -1,21 +1,8 @@
 <form [formGroup]="form" class="registro-container">
     <div class="contenedor">
-        <h1 style="color: #D7E3FC; font-family: 'Monaco'; margin: 3%;">Log in</h1>
+        <h1 style="color: #D7E3FC; font-family: 'Monaco'; margin: 3%; font-weight: bold;">Ingresar</h1>
         
-        <div class="users">
-            <button class="btnLogin" (click)="cargarDatos('1')">
-                <span id="displayName" class="user-name">M</span>
-            </button>
-            <button class="btnLogin" (click)="cargarDatos('2')">
-                <span id="displayName" class="user-name">A</span>
-            </button>
-            <button class="btnLogin">
-                <span id="displayName" class="user-name">X</span>
-            </button>
-            <button class="btnLogin">
-                <span id="displayName" class="user-name">X</span>
-            </button>
-    </div>
+
 
         <div class="contenedor-input row">
             <div class="col">
@@ -58,6 +45,12 @@
         <div style="width: 100%; display: flex; justify-content: space-evenly; margin: 10px;">
             <button class="btnEspecialidades" style="background: transparent; color: #D7E3FC;" routerLink="/registro">Registrarse</button>
             <button (click)="ingresar()" class="btnEspecialidades">Ingresar</button>
+        </div>
+
+        <div class="users">
+            <button class="btnLogin" *ngFor="let c of accesos" (click)="cargarDatos(c.correo)">
+                <img style="width: 100%; height: 100%;" src="{{c.foto}}">
+            </button>
         </div>
 
 
