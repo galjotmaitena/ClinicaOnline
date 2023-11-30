@@ -1,0 +1,43 @@
+<form class="registro-container">
+    <nav>
+        <button style="background: transparent; border: transparent; position: absolute; height: 100%; z-index: 1000;"  (click)="volver()">
+            <img  id="icon" src="assets/signo-de-hospital.png" >
+        </button>
+
+        <h2 id="title">Mis Horarios</h2>
+    </nav>
+
+    <div class="contenedor">
+        <div style="display: flex; flex-direction: column; width: 60%; height: 100%;">
+            <div class="col" style="display: flex; flex-direction: row; height: 100%; width: 100%; justify-content: center; align-items: center;">
+                <div style="width: 100%; display: flex; position: relative; justify-content: space-evenly; height: 100%; align-items: center;">
+                    <div class="imagEspecialidades" style="border-radius: 50%;" *ngFor="let e of especialidades" (click)="especialidad = e.especialidad">
+                        <img style="margin: 3px; height: 60%; width: 60%;" src={{e.foto}}>
+                    </div>
+                </div>
+            </div>
+            <div class="col" style="display: flex; flex-direction: row; height: 30%; width: 100%; justify-content: center; align-items: center;">
+                <div class="divDias" style="width: 80%; position: relative; justify-content: center; flex-wrap: wrap; align-items: center;">
+                    <div *ngFor="let d of dias">
+                        <button class="btnsDias" (click)="seleccionarDia(d)">{{d}}</button>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <div class="seleccion">
+            <h1 class="texto" style="color: #0466C8; margin: 5px; font-size: 30px; font-weight: bold;">Disponobilidad Horaria</h1>
+            <img style="height: 30%; width: 30%;" src="assets/reloj.png">
+            <h3 class="texto" style="color: #0466C8; margin: 5px; font-size: 25px;">Especialidad: {{especialidad}}</h3>
+            <h3 class="texto" style="color: #0466C8; margin: 5px; font-size: 25px;">Día/s: {{diasLabel}}</h3>
+            <div class="divDias" style="width: 50%; position: relative; justify-content: space-evenly; flex-wrap: wrap;">
+                <div class="input-field">
+                    <input type="number" required name="speciality" [(ngModel)]="duracion">
+                    <label>Duración del turno</label>
+                </div>
+            </div>
+            <button class="btnAsignar" (click)="asignarDisponibilidad()">Asignar</button>
+        </div>
+
+    </div>
+</form>

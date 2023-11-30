@@ -28,12 +28,18 @@ export class PacienteComponent {
   comentario = '';
   turno : any;
 
+  especialistas : any[] = [];
+
+  resenia : string = '';
+
   constructor(private aFirestorage : AngularFireStorage,  private authService : AuthService, private firestoreService : FirestoreService, private formBuilder: FormBuilder, private router : Router)
   {
   }
 
   ngOnInit()
   {
+    this.turnos = [];
+    this.listado = [];
     if(this.auth)
     {
       this.userLogeado = true;
@@ -41,11 +47,27 @@ export class PacienteComponent {
       this.firestoreService.traer('usuarios').subscribe((data)=>{
         data.forEach(u => {
           if(this.auth === u.correo)
-            {
-              this.usuario = u;
-              //this.router.navigate(['misTurnos/paciente']);
+          {
+            this.usuario = u;
+            //this.router.navigate(['misTurnos/paciente']);
+            this.firestoreService.traer('turnos').subscribe((data)=>{
+              this.turnos = [];
+              data.forEach(t => {
+                if(t.dniPaciente === u.dni)
+                {
+                  this.turnos.push(t);
+                }
+              });
+            });
 
+          }
+          else
+          {
+            if(u.tipo === 'especialista')
+            {
+              this.especialistas.push(u);
             }
+          }
         });
       });
     }
@@ -54,15 +76,9 @@ export class PacienteComponent {
       this.router.navigate(['/home']);
     }
 
-    this.firestoreService.traer('turnos').subscribe((data)=>{
-      this.turnos = [];
-      data.forEach(t => {
-        if(t.paciente === this.usuario.dni)
-        {
-          this.turnos.push(t);
-        }
-      });
-    })
+
+
+
   }
 
   filtrar(filtro : string)
@@ -70,9 +86,9 @@ export class PacienteComponent {
     this.firestoreService.traer('turnos').subscribe((data)=>{
       this.turnos = [];
       data.forEach(t => {
-        if(t.paciente === this.usuario.dni)
+        if(t.dniPaciente === this.usuario.dni)
         {
-          if(t.especialidad === filtro || t.especialista === filtro)
+          if(t.especialidad === filtro || t.apellidoEspecialista === filtro)
           {
             this.turnos.push(t);
           }
@@ -93,22 +109,22 @@ export class PacienteComponent {
   {
     this.filtro = filtro;
     this.mostrarListado();
-    console.log(this.filtro);
   }
 
   mostrarListado()
   {
+    this.turnos = [];
+
     let observable = this.firestoreService.traer('turnos').subscribe((data)=>{
       this.listado = [];
       data.forEach(t => {
-        if(t.paciente === this.usuario.dni)
+        if(t.dniPaciente === this.usuario.dni)
         {
           if(this.filtro === 'especialista')
           {
-            if(!this.listado.includes(t.especialista))
+            if(!this.listado.includes(t.apellidoEspecialista))
             {
-              this.listado.push(t.especialista);
-              console.log(t.especialista);
+              this.listado.push(t.apellidoEspecialista);
             }
           }
           else
@@ -140,19 +156,37 @@ export class PacienteComponent {
     this.router.navigate(['/home']);
   }
 
-
-  abrirModal(turno : any)
-  {
-    this.abrir = true;
-    this.turno = turno;
-  }
-
   enviar()
   {
     this.turno.resenia = this.comentario;
+    this.turno.cancelado = true;
     this.firestoreService.modificar('turnos', this.turno);
     this.comentario = '';
     this.abrir = false;
+  }
+
+  cambiarEstado(turno : any, estado : string)
+  {
+    this.turno = turno;
+
+    switch(estado)
+    {
+      case 'cancelar':
+        this.abrir = true;
+        break;
+      case 'encuesta':
+
+        break;
+      case 'calificar':
+
+        break;
+      case 'resenia':
+        this.abrir = true;
+        this.resenia = turno.resenia;
+        break;
+    }
+
+    //this.firestoreService.modificar('turnos', this.turno);
   }
 
   cerrar()

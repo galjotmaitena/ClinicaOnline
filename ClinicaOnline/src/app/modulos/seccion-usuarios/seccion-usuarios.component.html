@@ -4,6 +4,8 @@
             <img  id="icon" src="assets/signo-de-hospital.png" >
         </button>
 
+        <h2 id="title">Sección usuarios</h2>        
+
         <div class="botones">
             <button class="btnNav" (click)="mostrarDiv('listado')">Lista de Usuarios</button> 
             <button class="btnNav" (click)="mostrarDiv('registro')">Registro</button>
@@ -11,19 +13,55 @@
     </nav>
 
     <div *ngIf="mostrarListado" class="contenedor">
-        <h1 style="color: #D7E3FC; font-family: 'Monaco'; margin: 3%;">Listado Usuarios</h1>
-        <div class="usuario" *ngFor="let e of usuarios">
-            <p>{{e.apellido}} </p>
-            <p>{{e.nombre}}</p>
-            <p>{{e.dni}}</p>
-            <img class="foto" [src]="e.foto">
-            <button (click)="seleccionar('aprobado', e)" style="background-color: transparent; border: transparent; width: 3%; height: 60%; margin: 3%;">
-                <img src="assets/aceptar.png" style="height: 100%;">
-            </button>
-            <button (click)="seleccionar('rechazado', e)" style="background-color: transparent; border: transparent; width: 3%; height: 60%; margin: 3%;">
-                <img src="assets/rechazar.png" style="height: 140%; bottom: 15%; display: flex; position: relative;">
-            </button>
+        <!-- <h1 style="color: #D7E3FC; font-family: 'Monaco'; margin: 3%;">Listado Usuarios</h1> -->
+        <div style="display: flex; flex-direction: column; width: 33%; height: 100%; margin-top: 10px; margin-bottom: 10px; text-align:  center;">
+            <h3 style="color: #D7E3FC; font-family: 'Monaco'; margin: 3%;">Listado Especialistas</h3>
+            <div class="usuario" *ngFor="let e of especialistas">
+                <p>{{e.apellido}} </p>
+                <p>{{e.nombre}}</p>
+                <p>{{e.dni}}</p>
+                <img class="foto" [src]="e.foto">
+                <button *ngIf="e.tipo == 'especialista' && !e.aprobado" (click)="seleccionar('aprobado', e)" style="background-color: transparent; border: transparent; width: 3%; height: 60%; margin: 3%;">
+                    <img src="assets/aceptar.png" style="height: 100%;">
+                </button>
+                <button *ngIf="e.tipo == 'especialista' && e.aprobado" (click)="seleccionar('rechazado', e)" style="background-color: transparent; border: transparent; width: 3%; height: 60%; margin: 3%;">
+                    <img src="assets/rechazar.png" style="height: 140%; bottom: 15%; display: flex; position: relative;">
+                </button>
+            </div>
         </div>
+        <div style="display: flex; flex-direction: column; width: 33%; height: 100%; margin-top: 10px; margin-bottom: 10px; text-align: center;">
+            <h3 style="color: #D7E3FC; font-family: 'Monaco'; margin: 3%;">Listado Pacientes</h3>
+            <div class="usuario" *ngFor="let p of pacientes" (click)="seleccionarPaciente(p)">
+                <p>{{p.apellido}} </p>
+                <p>{{p.nombre}}</p>
+                <p>{{p.dni}}</p>
+                <img class="foto" [src]="p.foto">
+            </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; width: 33%; height: 100%; margin-top: 10px; margin-bottom: 10px; text-align: center;">
+            <h3 style="color: #D7E3FC; font-family: 'Monaco'; margin: 3%;">Paciente</h3>
+            <div class="usuario" style="height: 80%; flex-direction: column;">
+                <div class="historial" *ngFor="let h of historial" (click)="diaHistorial = h">
+                    <p>{{h.especialidad}} </p>
+                    <p>{{h.especialista}}</p>
+                    <p>{{h.fechaTurno}}</p>
+                </div>
+                <div style="height: auto; width: 90%; flex-direction: column; border: 3px solid #64B5F6; margin: 1px;">
+                    <p style="font-weight: bold; margin: 3px;">Historia Clínica</p>
+                    <div style="display: flex; flex-direction: row;">
+                        <p class="dPaciente" style="margin-left: 3px; width: 50%;">Altura: {{this.diaHistorial != null ? this.diaHistorial.altura : ''}}</p>
+                        <p class="dPaciente" style="margin-left: 3px; width: 50%;">Peso: {{this.diaHistorial != null ? this.diaHistorial.peso : ''}}</p>
+                    </div>
+                    <div style="display: flex; flex-direction: row;">
+                        <p class="dPaciente" style="margin-left: 3px; width: 50%;">Temperatura: {{this.diaHistorial != null ? this.diaHistorial.temperatura : ''}}</p>
+                        <p class="dPaciente" style="margin-left: 3px; width: 50%;">Presión: {{this.diaHistorial != null ? this.diaHistorial.presion : ''}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </div>
 
     <div *ngIf="mostrarRegistro" class="contenedorRegistro">

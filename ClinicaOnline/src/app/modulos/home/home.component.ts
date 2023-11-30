@@ -13,6 +13,7 @@ export class HomeComponent {
   esAdmin = false;
   usuario = this.authService.getUser()?.email;
   userLogeado = false;
+  tipo : string = '';
 
   constructor(private authService : AuthService, private firestoreService : FirestoreService, private router : Router){}
 
@@ -24,9 +25,9 @@ export class HomeComponent {
 
       this.firestoreService.traer('usuarios').subscribe((data)=>{
         data.forEach(u => {
-          if(this.usuario === u.correo && u.tipo === 'administrador')
+          if(this.usuario === u.correo)
           {
-            this.esAdmin = true;
+            this.tipo = u.tipo;
           }
         });
       });

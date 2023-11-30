@@ -1,16 +1,16 @@
 
 .contenedor{
-    flex-direction: column; 
+    flex-direction: row; 
     display: flex; 
     position: absolute;
-    width: 60%;
-    height: 50%;
+    width: 80%;
+    height: 70%;
     background: #64B5F6;
     border-radius: 20px;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    top: 30%;
-    left: 20%;
+    left: 10%;
+    top: 18%;
 }
 
 /* Estilizar el input checkbox para ocultarlo */
@@ -204,3 +204,85 @@ input:valid ~ label{
   .input-field input:focus + label {
     background: #979DAC;
   }
+
+.msjError{
+  font-size: 15px;
+  font-weight: bold;
+  color: rgb(191, 77, 77);
+  text-align: center;
+  font-family: "Monaco";
+}
+
+//txt
+
+.contenedor-input{
+  flex-direction: row; 
+  display: flex;
+  width: 100%;
+}
+
+.input-field{
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 7px;
+  width: 100%;
+}
+
+.input-field input{
+  width: 90%;
+  height: 40px;
+  border-radius: 6px;
+  font-size: 18px;
+  padding: 0 15px;
+  border: 2px solid #0466C8;
+  background: transparent;
+  color: #0466C8;
+  outline: none;
+  font-family: "Monaco";
+}
+
+.input-field label{
+  position: absolute;
+  top: 50%;
+  left: 6%;
+  transform: translateY(-50%);
+  color: #0466C8;
+  font-size: 19px;
+  pointer-events: none;
+  transition: .3s;
+  font-family: "Monaco";
+}
+
+input:focus ~ label,
+input:valid ~ label{
+  top: 0;
+  left: 6%;
+  font-size: 16px;
+  padding: 0 2px;
+  background: #D7E3FC;
+}
+
+.input-field input:placeholder-shown + label {
+  transform: translateY(0);
+}
+
+.input-field input:focus + label {
+  background: #D7E3FC;
+}
+
+.btnEnviar{
+  color: #D7E3FC;
+  font-size: 20px;
+  width: 40%;
+  height: auto;
+  border-radius: 6px;
+  font-size: 18px;
+  padding: 0 15px;
+  border: 2px solid #0466C8;
+  background: #0466C8;
+  outline: none;
+  margin: 15px;
+  font-family: "Monaco";
+}

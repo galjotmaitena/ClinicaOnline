@@ -107,17 +107,6 @@ export class RegPacienteComponent {
     };
   }
 
-  seleccionarPerfil(perfil : string)
-  {
-    if(perfil === 'especialista')
-    {
-      this.especialista = 1;
-    }
-    else
-    {
-      this.especialista = 0;
-    }
-  }
 
   seleccionarFoto(foto : number)
   {
@@ -133,7 +122,7 @@ export class RegPacienteComponent {
 
   alta()
   {
-    if(!this.form.valid  || this.especialista === -1)
+    if(!this.form.valid)
     {
       this.mostrarToast = true;
       this.mensaje = 'Usted no selecciono el perfil o no completo todos los campos';
@@ -149,17 +138,9 @@ export class RegPacienteComponent {
     {
       if(this.clave === this.claveRep)
       {
-        if(this.especialista === 1)
-        {
-          this.darAltaEspecialista();
-        }
-        else
-        {
-          if(this.especialista === 0)
-          {
+        
             this.darAltaPaciente();
-          }
-        }
+          
       }
       else
       {
@@ -173,52 +154,7 @@ export class RegPacienteComponent {
     }
   }
 
-  darAltaEspecialista()
-  {
-    if(!this.fotoSeleccionada1)
-    {
-      this.mostrarToast = true;
-      this.mensaje = 'Le falta ingresar la foto.';
-
-      setTimeout(() => {
-          this.mostrarToast = false;
-      }, 3000);
-      
-    }
-    else
-    {
-      this.guardarFoto('especialista', 'file1').then((data)=>{
-        data.subscribe((url)=>{
-          this.foto1 = url;
-
-          let especialista = {'nombre' : this.nombre, 
-                            'apellido' : this.apellido, 
-                            'edad' : this.edad, 
-                            'dni' : this.dni, 
-                            'especialidad' : this.especialidad.split(' '), 
-                            'correo' : this.correo, 
-                            'foto' : this.foto1,
-                            'aprobado' : false,
-                            'tipo' : 'especialista'};
-      
-        this.firestoreService.guardar('usuarios', especialista);
-        this.authService.signUp(this.correo, this.clave);
-      
-        this.limpiarCampos();
-
-        this.mostrarToast = true;
-        this.mensaje = 'Se dio de alta con exito.';
-
-        setTimeout(() => {
-          this.mostrarToast = false;
-          this.router.navigate(["/home"]);
-        }, 3000);
-        });
-
-      });
-    }
-  }
-
+  
   darAltaPaciente()
   {
     if(!this.fotoSeleccionada1 || !this.fotoSeleccionada2)
@@ -248,7 +184,8 @@ export class RegPacienteComponent {
                               'correo' : this.correo, 
                               'foto' : this.foto1,
                               'foto2' : this.foto2,
-                              'tipo' : 'paciente'};
+                              'tipo' : 'paciente',
+                              'historialClinico' : []};
         
           this.firestoreService.guardar('usuarios', especialista);
           this.authService.signUp(this.correo, this.clave);
@@ -292,29 +229,7 @@ export class RegPacienteComponent {
     return url;
   }
 
-  seleccionarEspecialidad(especialidad : string)
-  {
-    if(!this.especialidadSelec.includes(especialidad))
-    {
-      this.especialidadSelec.push(especialidad);
-    }
-    else
-    {
-      let index = this.especialidadSelec.indexOf(especialidad);
-      if(index !== -1)
-      {
-        this.especialidadSelec.splice(index, 1);
-      }
-    }
-
-    this.especialidad = '';
-    this.especialidadSelec.forEach(e => {
-      this.especialidad += `${e} `;
-    });
-    console.log(this.especialista);
-    
-  }
-
+  
 
   limpiarCampos()
   {

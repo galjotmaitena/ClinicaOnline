@@ -6,6 +6,7 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 import { FormBuilder, FormGroup, Validators, AbstractControl, ValidatorFn, MinLengthValidator } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ConstantPool } from '@angular/compiler';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-especialista',
@@ -25,12 +26,25 @@ export class EspecialistaComponent {
 
   turnos : any[] = [];
 
-  abrir = false;
-  comentario = '';
+  //abrir = false;
+  accion : string = '';
   turno : any;
 
-  constructor(private authService : AuthService, private firestoreService : FirestoreService, private router : Router)
+  resenia : string = '';
+
+  altura : number | null = null;
+  peso : number | null = null;
+  temperatura : number | null = null;
+  presion : number | null = null;
+
+  mostrarHistoria : boolean = false;
+  mostrarComentario : boolean = false;
+
+  pacientes : any[] = [];
+
+  constructor(private formBuilder: FormBuilder,private authService : AuthService, private firestoreService : FirestoreService, private router : Router) 
   {
+    
   }
 
   ngOnInit()
@@ -45,7 +59,14 @@ export class EspecialistaComponent {
             if(this.auth === u.correo)
             {
               this.usuario = u;
+              console.log('***************');
+              console.log(this.usuario);
+              console.log('***************');
+            }
 
+            if(u.tipo === 'paciente')
+            {
+              this.pacientes.push(u);
             }
         });
       });
@@ -54,6 +75,7 @@ export class EspecialistaComponent {
     {
       this.router.navigate(['/home']);
     }
+
 
     this.firestoreService.traer('turnos').subscribe((data)=>{
       this.turnos = [];
@@ -64,6 +86,7 @@ export class EspecialistaComponent {
         }
       });
     })
+
   }
 
   filtrar(filtro : string)
@@ -73,7 +96,7 @@ export class EspecialistaComponent {
       data.forEach(t => {
         if(t.dniEspecialista === this.usuario.dni)
         {
-          if(t.especialidad === filtro || t.paciente === filtro)
+          if(t.especialidad === filtro || t.apellidoPaciente === filtro)
           {
             this.turnos.push(t);
           }
@@ -99,6 +122,7 @@ export class EspecialistaComponent {
 
   mostrarListado()
   {
+    this.turnos = [];
     let observable = this.firestoreService.traer('turnos').subscribe((data)=>{
       this.listado = [];
       data.forEach(t => {
@@ -106,10 +130,9 @@ export class EspecialistaComponent {
         {
           if(this.filtro === 'paciente')
           {
-            if(!this.listado.includes(t.paciente))
+            if(!this.listado.includes(t.apellidoPaciente))
             {
-              this.listado.push(t.paciente);
-              console.log(t.paciente);
+              this.listado.push(t.apellidoPaciente);
             }
           }
           else
@@ -119,7 +142,6 @@ export class EspecialistaComponent {
               if(!this.listado.includes(t.especialidad))
               {
                 this.listado.push(t.especialidad);
-                console.log(t.especialidad);
               }
             }
             else
@@ -144,43 +166,108 @@ export class EspecialistaComponent {
 
   cambiarEstado(turno : any, estado : string)
   {
+    this.resenia = '';
     this.turno = turno;
 
     switch(estado)
     {
-      case 'rechazar':
-        this.turno.rechazado = true;
-        this.abrir = true;
-        break;
-      case 'cancelar':
-        this.turno.cancelado = true;
-        this.abrir = true;
-        break;
       case 'aceptar':
+        this.mostrarComentario = false;
+        this.mostrarHistoria = false;
         this.turno.aceptado = true;
         this.firestoreService.modificar('turnos', this.turno);
-        break;
-      case 'finalizar':
-        this.turno.finalizado = true;
-        this.abrir = true;
+        Swal.fire("Listo!", "Turno aceptado...", "success");
         break;
       case 'resenia':
-        this.abrir = true;
+        this.mostrarComentario = true;
+        this.mostrarHistoria = false;
+        this.accion = 'resenia';
+        this.resenia = turno.resenia;
+        break;
+      case 'cancelar':
+        this.mostrarComentario = true;
+        this.mostrarHistoria = false;
+        this.accion = 'cancelar';
+        Swal.fire("Aviso!", "Deje un comentario...", "warning");
+        break;
+      case 'rechazar':
+        this.mostrarComentario = true;
+        this.mostrarHistoria = false;
+        this.accion = 'rechazar';
+        Swal.fire("Aviso!", "Deje un comentario...", "warning");
+        break;
+      case 'finalizar':
+        this.mostrarComentario = true;
+        this.mostrarHistoria = true;
+        this.accion = 'finalizar';
+        Swal.fire("Aviso!", "Complete la historia clinica...", "warning");
         break;
     }
   }
 
-  enviar()
+  enviar(datos : string)
   {
-    this.turno.resenia = this.comentario;
+    let pac : any;
+
+    if(datos === 'historia' && this.accion === 'finalizar')
+    {
+      if(this.altura !== null && this.peso !== null && this.temperatura !== null && this.presion !== null && this.resenia !== '')
+      {
+        this.pacientes.forEach((u : any) => {
+            if(u.tipo === 'paciente' && u.dni === this.turno.dniPaciente)
+            {
+              pac = u;
+              //console.log(u);
+            }
+          });
+
+          console.log(pac);
+          let objHistoria = {altura:this.altura, peso:this.peso, temperatura:this.temperatura, presion:this.presion, fechaTurno:this.turno.dia, especialidad:this.turno.especialidad, especialista:this.turno.apellidoEspecialista};
+          pac.historialClinico.push(JSON.stringify(objHistoria));
+  
+          this.firestoreService.modificar('usuarios', pac);
+          
+          this.turno.resenia = this.resenia;
+          this.turno.finalizado = true;
+  
+          Swal.fire("Listo!", "Los datos del paciente se cargaron correctamente...", "success");
+       
+
+      }
+      else
+      {
+        Swal.fire("Error!", "Faltaron completar campos...", "error");
+      }
+    }
+    else
+    {
+      if(datos === 'comentario')
+      {
+        switch(this.accion)
+        {
+          case 'rechazar':
+            this.turno.rechazado = true;
+            break;
+          case 'cancelar':
+            this.turno.cancelado = true;
+            break;
+        }
+        this.turno.resenia = this.resenia;
+        Swal.fire("Listo!", "Comentario enviado...", "success");
+      }
+    }
+
     this.firestoreService.modificar('turnos', this.turno);
-    this.comentario = '';
-    this.abrir = false;
+
+    this.resenia = '';
+    this.mostrarComentario = false;
+    this.mostrarHistoria = false;
   }
 
   cerrar()
   {
-    this.abrir = false;
+    this.resenia = '';
+    
     this.mostrarListado();
   }
 }

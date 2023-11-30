@@ -3,11 +3,19 @@
         <img id="icon" src="assets/signo-de-hospital.png">
         <h2 id="title">Bienvenido</h2>
         <div class="botones">
-            <button class="btnNav" *ngIf="esAdmin" routerLink="/turnos">Turnos</button>
-            <button class="btnNav" *ngIf="esAdmin" routerLink="/seccionUsuarios">Seccion Usuarios</button> 
+            <button class="btnNav" *ngIf="userLogeado && tipo === 'administrador'" routerLink="/turnos">Turnos</button>
+            <button class="btnNav" *ngIf="userLogeado && tipo === 'administrador'" routerLink="/seccionUsuarios">Seccion Usuarios</button> 
             <button class="btnNav" *ngIf="!userLogeado" routerLink="/login">Ingresar</button>
             <button class="btnNav" *ngIf="!userLogeado" routerLink="/registro">Registrarse</button>
-            <button class="btnNav" *ngIf="userLogeado && !esAdmin" routerLink="/misTurnos">Mis turnos</button>
+
+            <button class="btnNav" *ngIf="userLogeado && tipo !== 'administrador'" routerLink="/misTurnos">Mis turnos</button>
+            <button class="btnNav" *ngIf="userLogeado && tipo === 'administrador'" routerLink="/solicitarTurno">Solicitar turno</button>
+
+            <button class="btnNav" *ngIf="userLogeado && tipo === 'paciente'" routerLink="/solicitarTurno">Solicitar turno</button>
+            <button class="btnNav" *ngIf="userLogeado && tipo === 'especialista'" routerLink="/pacientes">Pacientes</button>
+
+            <button class="btnNav" *ngIf="userLogeado" routerLink="/miPerfil">Mi Perfil</button>
+            
             <button class="btnNav" *ngIf="userLogeado" (click)="logout()">Salir</button>
         </div>         
     </nav>

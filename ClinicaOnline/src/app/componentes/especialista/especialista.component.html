@@ -1,48 +1,90 @@
 <div class="contenedor">
-    <h1 style="color: #D7E3FC; font-family: 'Monaco'; margin: 3%;">Turnos</h1>
-    <div style="flex-direction: row; display: flex;">
-        <p class="texto">Especialidad</p>
-        <div class="toggles">
-            <input type="radio" id="toggle" name="togg" (click)="seleccionarFiltro('especialidad')">
-            <label for="toggle" class="toggle-label"></label>
+    <div style="display: flex; flex-direction: column; width: 50%; height: 100%; margin-top: 10px; margin-bottom: 10px; text-align:  center;">
+        <h1 style="color: #D7E3FC; font-family: 'Monaco'; margin: 3%;">Turnos</h1>
+        <div style="flex-direction: row; display: flex; align-items: center; justify-content: center;">
+            <p class="texto">Especialidad</p>
+            <div class="toggles">
+                <input type="radio" id="toggle" name="togg" (click)="seleccionarFiltro('especialidad')">
+                <label for="toggle" class="toggle-label"></label>
+            </div>
+            <p class="texto">Paciente</p>
+            <div class="toggles">
+                <input type="radio" id="toggle2" name="togg" (click)="seleccionarFiltro('paciente')">
+                <label for="toggle2" class="toggle-label"></label>
+            </div>
+            <p class="texto">Todos</p>
+            <div class="toggles">
+                <input type="radio" id="toggle3" name="togg" (click)="seleccionarFiltro('')">
+                <label for="toggle3" class="toggle-label"></label>
+            </div>
         </div>
-        <p class="texto">Paciente</p>
-        <div class="toggles">
-            <input type="radio" id="toggle2" name="togg" (click)="seleccionarFiltro('paciente')">
-            <label for="toggle2" class="toggle-label"></label>
+    
+        <div style="width: 100%; display: flex; position: relative; justify-content: space-evenly; flex-wrap: wrap;">
+            <div *ngFor="let e of listado">
+                <button class="btnEspecialidades" (click)="filtrar(e)">{{e}}</button>
+            </div>
+        </div> 
+    
+        <div class="usuario" *ngFor="let t of turnos">
+            <p>{{t.especialidad}} </p>
+            <p>{{t.apellidoPaciente}}</p>
+            <button class="btnEspecialidades" *ngIf="!t.finalizado&& t.aceptado && !t.rechazado && !t.cancelado" (click)="cambiarEstado(t, 'cancelar'); accion = 'cancelar'">Cancelar</button>
+            <button class="btnEspecialidades" *ngIf="!t.finalizado && !t.aceptado && !t.cancelado && !t.rechazado" (click)="cambiarEstado(t, 'rechazar')">Rechazar</button>
+            <button class="btnEspecialidades" *ngIf="!t.finalizado && !t.cancelado && !t.rechazado && !t.aceptado" (click)="cambiarEstado(t, 'aceptar')">Aceptar</button>
+            <button class="btnEspecialidades" *ngIf="t.aceptado && !t.finalizado && !t.cancelado && !t.rechazado" (click)="cambiarEstado(t, 'finalizar')">Finalizar</button>
+            <button class="btnEspecialidades" *ngIf="t.resenia != ''" (click)="cambiarEstado(t, 'resenia')">Reseña</button>
+        </div> 
+    </div>
+    <div style="display: flex; flex-direction: column; width: 48%; height: 90%; margin: 10px; margin-bottom: 10px;" *ngIf="mostrarComentario || mostrarHistoria">
+        <div *ngIf="mostrarComentario" style="display: flex; flex-direction: column; width: 100%; height: 40%; margin: 10px; margin-bottom: 10px; text-align:  center; background-color: #D7E3FC; align-items: center; justify-content: center;">
+            <h2 style="color: #0466C8; font-family: 'Monaco'; margin: 3%;">Deje un comentario</h2>
+            <div class="input-field">
+                <input type="text" required name="com" [(ngModel)]="resenia">
+                <label>Comentario</label>
+            </div>
+            <button *ngIf=" accion == 'cancelar' || accion == 'rechazar'" class="btnEnviar" (click)="enviar('comentario')">Enviar</button>
         </div>
-        <p class="texto">Todos</p>
-        <div class="toggles">
-            <input type="radio" id="toggle3" name="togg" (click)="seleccionarFiltro('')">
-            <label for="toggle3" class="toggle-label"></label>
+        <div *ngIf="mostrarHistoria" style="display: flex; flex-direction: column; width: 100%; height: 60%; margin: 10px; margin-bottom: 10px; text-align:  center; background-color: #D7E3FC; align-items: center; justify-content: center;">
+            <h2 style="color: #0466C8; font-family: 'Monaco'; margin: 3%;">Historia clínica</h2>
+                <div class="row">
+                    <div class="col">
+                        <div class="col"> 
+                            <div class="input-field">
+                                <input type="number" required name="alt" [(ngModel)]="altura">
+                                <label>Altura</label>
+                            </div>
+                        </div> 
+                    </div>
+                    <div class="col">
+                        <div class="col"> 
+                            <div class="input-field">
+                                <input type="text" required name="pes" [(ngModel)]="peso">
+                                <label>Peso</label>
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="col"> 
+                            <div class="input-field">
+                                <input type="number" required name="temp" [(ngModel)]="temperatura">
+                                <label>Temperatura</label>
+                            </div>
+                        </div> 
+                    </div>
+                    <div class="col">
+                        <div class="col"> 
+                            <div class="input-field">
+                                <input type="text" required name="pres" [(ngModel)]="presion">
+                                <label>Presión</label>
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+            <button class="btnEnviar" (click)="enviar('historia')">Enviar</button>
         </div>
     </div>
-
-    <div style="width: 50%; display: flex; position: relative; justify-content: space-evenly; flex-wrap: wrap;">
-        <div *ngFor="let e of listado">
-            <button class="btnEspecialidades" (click)="filtrar(e)">{{e}}</button>
-        </div>
-    </div> 
-
-    <div class="usuario" *ngFor="let t of turnos">
-        <p>{{t.especialidad}} </p>
-        <p>{{t.paciente}}</p>
-        <button class="btnEspecialidades" *ngIf="!t.realizado && !t.aceptado && !t.rechazado && !t.cancelado" (click)="cambiarEstado(t, 'cancelar')">Cancelar</button>
-        <button class="btnEspecialidades" *ngIf="!t.realizado && !t.aceptado && !t.cancelado && !t.rechazado" (click)="cambiarEstado(t, 'rechazar')">Rechazar</button>
-        <button class="btnEspecialidades" *ngIf="!t.realizado && !t.cancelado && !t.rechazado && !t.aceptado" (click)="cambiarEstado(t, 'aceptar')">Aceptar</button>
-        <button class="btnEspecialidades" *ngIf="t.aceptado && !t.finalizado" (click)="cambiarEstado(t, 'finalizar')">Finalizar</button>
-        <button class="btnEspecialidades" *ngIf="t.finalizado" (click)="cambiarEstado(t, 'resenia')">Reseña</button>
-    </div> 
+    
 </div>
 
-<div id="miModal" class="modal" *ngIf="abrir">
-    <div class="modal-contenido">
-        <span class="cerrar-modal" id="cerrarModalBtn" (click)="cerrar()">&times;</span>
-        <h2 style="color: #D7E3FC; font-family: 'Monaco'; margin: 3%;">Deje un comentario acerca de su acción</h2>
-        <div class="input-field">
-            <input type="text" id="miInput" required name="com" [(ngModel)]="comentario" style="width: 65%;">
-            <label>Comentario</label>
-        </div>
-        <button class="btnEspecialidades" id="obtenerDatoBtn" (click)="enviar()">Enviar</button>
-    </div>
-</div>

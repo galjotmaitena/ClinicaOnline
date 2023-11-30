@@ -66,7 +66,7 @@ export class TurnosComponent {
     this.firestoreService.traer('turnos').subscribe((data)=>{
       this.turnos = [];
       data.forEach(t => {
-         if(t.especialidad === filtro || t.especialista === filtro)
+         if(t.especialidad === filtro || t.apellidoEspecialista === filtro)
           {
             this.turnos.push(t);
           }
@@ -92,15 +92,15 @@ export class TurnosComponent {
 
   mostrarListado()
   {
+    this.turnos = [];
     let observable = this.firestoreService.traer('turnos').subscribe((data)=>{
       this.listado = [];
       data.forEach(t => {
         if(this.filtro === 'especialista')
           {
-            if(!this.listado.includes(t.especialista))
+            if(!this.listado.includes(t.apellidoEspecialista))
             {
-              this.listado.push(t.especialista);
-              console.log(t.especialista);
+              this.listado.push(t.apellidoEspecialista);
             }
           }
           else
@@ -110,7 +110,6 @@ export class TurnosComponent {
               if(!this.listado.includes(t.especialidad))
               {
                 this.listado.push(t.especialidad);
-                console.log(t.especialidad);
               }
             }
             else

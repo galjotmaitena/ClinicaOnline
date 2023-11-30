@@ -1,4 +1,53 @@
-<div style="height: 50%; width: 70%;">
-    <p>solicitar-turno works!</p>
+<form class="registro-container">
+    <nav>
+        <button style="background: transparent; border: transparent; position: absolute; height: 100%; z-index: 1000;"  (click)="volver()">
+            <img  id="icon" src="assets/signo-de-hospital.png" >
+        </button>
 
-</div>
+        <h2 id="title">Solicitar Turno</h2>        
+
+    </nav>
+
+    <div class="contenedor">
+        <div style="display: flex; flex-direction: column; width: 70%; height: 100%;">
+            <div class="btnsOtros" *ngIf="esAdmin" style="width: 100%; position: relative; justify-content: center; flex-wrap: wrap; align-items: center;">
+                <button class="dias" *ngFor="let p of pacientes" (click)="seleccionarPaciente(p)">{{p.apellido}} {{p.nombre}}</button>
+            </div>
+
+            <div class="btnsEspecialistas" *ngIf="paciente != null">
+                <div class="imagEspecialistas" *ngFor="let e of especialistas" >
+                    <img style="margin: 3px; height: 60%; width: 60%;" src={{e.foto}} (click)="buscarEspecialidad(e)">
+                    <h6 class="texto" style="margin-left: 0;">{{e.nombre}}</h6>
+                </div>
+            </div>
+    
+            <div class="btnsEspecialistas" *ngIf="mostrarEspecialidades">
+                <div class="imagEspecialidades" style="border-radius: 50%;" *ngFor="let e of especialidades">
+                    <img style="margin: 3px; height: 60%; width: 60%;" src={{e.foto}} (click)="buscarTurnos(e)">
+                </div>
+            </div>
+
+            <div class="btnsOtros" *ngIf="mostrarDias" style="width: 100%; position: relative; justify-content: center; flex-wrap: wrap; align-items: center;">
+                <button class="dias" *ngFor="let f of fechasProximas" (click)="obtenerHorarios(f)">{{f}}</button>
+            </div>
+            <div class="btnsOtros" *ngIf="mostrarDias" style="width: 100%; position: relative; justify-content: center; flex-wrap: wrap; align-items: center;">
+                <button class="dias" *ngFor="let h of horarios" (click)="hora = h">{{h}}</button>
+            </div>
+        </div>
+        <div class="seleccion">
+            <h1 class="texto" style="color: #0466C8; margin: 5px; font-size: 30px; font-weight: bold;">Solicitar Turno</h1>
+            <img style="height: 40%; width: 40%;" src="assets/turno.png">
+            <h3 class="texto" style="color: #0466C8; margin: 5px; font-size: 25px;" *ngIf="esAdmin">Paciente: {{this.paciente != null ? this.paciente.apellido : ''}} {{this.paciente != null ? this.paciente.nombre : ''}}</h3>
+            <h3 class="texto" style="color: #0466C8; margin: 5px; font-size: 25px;">Especialidad: {{this.especialidadFoto != null ? this.especialidadFoto.especialidad : ''}}</h3>
+            <h3 class="texto" style="color: #0466C8; margin: 5px; font-size: 25px;">Especialista: {{this.especialista != null ? this.especialista.apellido : ''}} {{this.especialista != null ? this.especialista.nombre : ''}}</h3>
+            <h3 class="texto" style="color: #0466C8; margin: 5px; font-size: 25px;">Día: {{dia | date:'dd-MM'}} Hora: {{hora}}</h3>
+            <button class="btnAsignar" (click)="solicitarTurno()">Asignar</button>
+        </div>
+
+    </div>
+
+       
+        
+
+
+</form>

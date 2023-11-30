@@ -1,5 +1,5 @@
 .registro-container{
-    background-image: url('../../../assets/fondo3.jpg');
+    background: #E3F2FD;
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -7,8 +7,7 @@
     height: 100%;
     width: 100%;
     position: fixed;
-    justify-content:center;
-    align-items: center;
+    justify-content:space-evenly;
 }
 
 #title{
@@ -20,7 +19,8 @@
     color: #023E7D;
     position: relative;
     display: flex;
-    top: 20%;
+    top: 25%;
+    left: 4%;
 }
 
 #icon{
@@ -29,8 +29,9 @@
 }
 
 nav{
-    background-color: #42A5F5;
-    height:8%;
+    background-color: #90CAF9;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2); 
+    height:10%;
     width: 100%;
     position:fixed;
     display: flex;
@@ -39,55 +40,29 @@ nav{
 .btnNav{
     width: 15%;
     font-family: "Monaco";
-    font-size: 20px;
+    font-size: 120%;
     color: #023E7D;
-    background-color: #64B5F6;
+    background-color: #E3F2FD;
     text-align: center;
     line-height: 2;
     margin-left: 0.5%;
     margin-right: 0.5%;
     border: 2px solid #023E7D;
     border-radius: 10px;
-    margin-top: 0.5%;
-    margin-bottom: 0.5%;
+    margin-top: 1%;
+    margin-bottom: 1%;
 }
 
 .btnNav:hover{
-    background-color: #2196F3;
+    background-color: #64B5F6;
     color: #023E7D;
     font-weight: bold;
 }
 
 .btnNav:active{
-    background-color: #ABC4FF;
+    background-color: #90CAF9;
     color: #023E7D;
     font-weight: bold;
-}
-
-.btnUser{
-    background-color: transparent;
-    justify-content:center;
-    margin-left: 1%;
-    margin-right: 3%;
-    border: 2px solid #b4e100;
-    border-radius: 50px;
-    margin-top: 0.5%;
-    margin-bottom: 0.5%;
-    width: fit-content;
-    align-items: center;
-}
-
-.btnUser:hover{
-    background-color: #b4e100;
-}
-
-.btnUser:active{
-    background-color: #d5fe40;
-}
-
-#user{
-    height:63%;
-    width: 105%;
 }
 
 .botones{
@@ -100,16 +75,16 @@ nav{
 }
 
 .contenedor{
-    flex-direction: column; 
+    flex-direction: row; 
     display: flex; 
     position: relative;
-    width: 60%;
+    width: 80%;
     height: 70%;
-    background: #0466C8;
+    background: #64B5F6;
     border-radius: 20px;
     justify-content:flex-start;
     align-items: center;
-    left: 20%;
+    left: 10%;
     top: 18%;
 }
 
@@ -128,9 +103,24 @@ nav{
     text-align: center;
 }
 
+.historial{
+    width: 90%;
+    height: 9%;
+    background: #64B5F6;
+    margin: 3px;
+    margin-left: 10px;
+    margin-right: 10px;
+    flex-direction: row;
+    display: flex;
+    text-align: center;
+    justify-content: space-evenly;
+    align-items: center;
+    text-align: center;
+}
+
 .foto{
-    width: 5%;
-    height: 90%;
+    width: 10%;
+    height: 85%;
     margin: 3px;
 }
 
@@ -296,7 +286,7 @@ input:valid ~ label{
     position: relative;
     width: 45%;
     height: auto;
-    background: #0466C8;
+    background: #64B5F6;
     border-radius: 5%;
     justify-content: center;
     align-items: center;
@@ -316,6 +306,16 @@ p{
     font-size: 20px;
     align-items: center;
     text-align: center;
+    justify-content: center;
+    margin: 0;
+}
+
+.dPaciente{
+    color: #002855; 
+    font-family: 'Monaco';
+    font-size: 20px;
+    align-items: start;
+    text-align: start;
     justify-content: center;
     margin: 0;
 }

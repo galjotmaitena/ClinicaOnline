@@ -19,7 +19,8 @@ export class SeccionUsuariosComponent {
   mostrarToast = false;
   mensaje = "";
 
-  usuarios : any[] = [];
+  especialistas : any[] = [];
+  pacientes : any[] = [];
   observable : any;
 
   mostrarListado = false;
@@ -36,6 +37,11 @@ export class SeccionUsuariosComponent {
 
   foto1 : any = '';
   fotoSeleccionada1 = false;
+
+  fotoPaciente : string = 'assets/usuario.png';
+  paciente : any;
+  historial : any[] = [];
+  diaHistorial : any;
 
   constructor(private aFirestorage : AngularFireStorage,  private authService : AuthService, private firestoreService : FirestoreService, private formBuilder: FormBuilder, private router : Router)
   {
@@ -54,11 +60,19 @@ export class SeccionUsuariosComponent {
   {
     this.observable = this.firestoreService.traer('usuarios').subscribe((data) => {
 
-      this.usuarios = [];
+      this.pacientes = [];
+      this.especialistas = [];
       data.forEach(usuario => {
-        if(!usuario.aprobado && usuario.tipo === 'especialista')
+        if(usuario.tipo === 'paciente')
         {
-          this.usuarios.push(usuario);
+          this.pacientes.push(usuario);
+        }
+        else
+        {
+          if(usuario.tipo === 'especialista')
+          {
+            this.especialistas.push(usuario);
+          }
         }
       });
       console.log(data);
@@ -96,7 +110,7 @@ export class SeccionUsuariosComponent {
       usuario.aprobado = true;
   
       this.firestoreService.modificar('usuarios', usuario).then(()=>{
-        this.usuarios = [];
+        this.especialistas = [];
   
         this.mostrarToast = true;
         this.mensaje = 'Especialista aprobado.';
@@ -108,12 +122,22 @@ export class SeccionUsuariosComponent {
     }
     else
     {
-      this.mostrarToast = true;
-      this.mensaje = 'Especialista rechazado.';
-
-      setTimeout(() => {
-        this.mostrarToast = false;
-      }, 3000);
+      if(aprobado === 'rechazado')
+      {
+        let usuario = especialista;
+        usuario.aprobado = false;
+    
+        this.firestoreService.modificar('usuarios', usuario).then(()=>{
+          this.especialistas = [];
+    
+          this.mostrarToast = true;
+          this.mensaje = 'Especialista aprobado.';
+    
+          setTimeout(() => {
+            this.mostrarToast = false;
+          }, 3000);
+        });
+      }
     }
 
   }
@@ -242,6 +266,19 @@ export class SeccionUsuariosComponent {
     this.foto1 = '';
 
     this.fotoSeleccionada1 = false;
+  }
+
+
+  seleccionarPaciente(paciente : any)
+  {
+    this.historial = [];
+    this.diaHistorial = '';
+    this.paciente = paciente;
+    paciente.historialClinico.forEach((h:any) => {
+      let hist = JSON.parse(h);
+      this.historial.push(hist);
+    });
+    this.fotoPaciente = paciente.foto;
   }
 
   volver()

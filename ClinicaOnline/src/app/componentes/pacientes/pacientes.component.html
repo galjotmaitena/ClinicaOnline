@@ -1,0 +1,24 @@
+<div class="registro-container">
+    <nav>
+        <button style="background: transparent; border: transparent; position: absolute; height: 100%; z-index: 1000;"  (click)="volver()">
+            <img  id="icon" src="assets/signo-de-hospital.png" >
+        </button>
+        <h2 id="title">Pacientes</h2>        
+    </nav>
+
+    <div class="datos-container">
+        <div class="contenedor">
+            <div class="historial" *ngFor="let h of historial">
+                <p>{{h.especialidad}} </p>
+                <p>{{h.especialista}}</p>
+                <p>{{h.fechaTurno}}</p>
+                <p>{{h.altura}}</p>
+                <p>{{h.peso}}</p>
+                <p>{{h.temperatura}}</p>
+                <p>{{h.presion}}</p>
+            </div>
+
+        </div>
+    </div>
+
+</div>

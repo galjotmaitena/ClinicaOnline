@@ -37,9 +37,11 @@
     
         <div class="usuario" *ngFor="let t of turnos">
             <p>{{t.especialidad}} </p>
-            <p>{{t.especialista}}</p>
-            <p>{{t.paciente}}</p>
-            <button class="btnEspecialidades" *ngIf="!t.realizado && !t.aceptado && !t.realizado" (click)="abrirModal(t)">Cancelar</button>
+            <p>{{t.apellidoEspecialista}}</p>
+            <p>{{t.apellidoPaciente}}</p>
+            <p>{{t.dia}}</p>
+            <p>{{t.hora}}</p>
+            <button class="btnEspecialidades" *ngIf="!t.realizado && !t.aceptado && !t.realizado && !t.cancelado" (click)="abrirModal(t)">Cancelar</button>
         </div> 
     </div>
     

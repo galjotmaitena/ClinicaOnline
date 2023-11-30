@@ -18,6 +18,10 @@ import { EspecialistaComponent } from './componentes/especialista/especialista.c
 import { TurnosComponent } from './componentes/turnos/turnos.component';
 import { RegPacienteComponent } from './componentes/reg-paciente/reg-paciente.component';
 import { RegEspecialistaComponent } from './componentes/reg-especialista/reg-especialista.component';
+import { MisHorariosComponent } from './componentes/mis-horarios/mis-horarios.component';
+import { DatePipe } from '@angular/common';
+import { PacientesComponent } from './componentes/pacientes/pacientes.component';
+
 
 @NgModule({
   declarations: [
@@ -29,6 +33,8 @@ import { RegEspecialistaComponent } from './componentes/reg-especialista/reg-esp
     TurnosComponent,
     RegPacienteComponent,
     RegEspecialistaComponent,
+    MisHorariosComponent,
+    PacientesComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,7 +49,7 @@ import { RegEspecialistaComponent } from './componentes/reg-especialista/reg-esp
 
     
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

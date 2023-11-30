@@ -26,22 +26,32 @@
 
     <div class="usuario" *ngFor="let t of turnos">
         <p>{{t.especialidad}} </p>
-        <p>{{t.especialista}}</p>
-        <button class="btnEspecialidades" *ngIf="!t.realizado" (click)="abrirModal(t)">Cancelar</button>
-        <button class="btnEspecialidades" *ngIf="t.resenia !== ''">Reseña</button>
-        <button class="btnEspecialidades" *ngIf="t.resenia !== '' && t.realizado">Encuesta</button>
-        <button class="btnEspecialidades" *ngIf="t.realizado" (click)="abrirModal(t)">Calificar Atencion</button>
+        <p>{{t.apellidoEspecialista}}</p>
+        <p>{{t.dia}}</p>
+        <p>{{t.hora}}</p>
+
+        <button class="btnEspecialidades" *ngIf="!t.realizado && !t.cancelado" (click)="cambiarEstado(t, 'cancelar')">Cancelar</button>
+        <button class="btnEspecialidades" *ngIf="t.resenia !== ''" (click)="cambiarEstado(t, 'resenia')">Reseña</button>
+        <button class="btnEspecialidades" *ngIf="t.resenia !== '' && t.realizado" (click)="cambiarEstado(t, 'encuesta')">Encuesta</button>
+        <button class="btnEspecialidades" *ngIf="t.realizado" (click)="cambiarEstado(t, 'calificar')">Calificar Atencion</button>
     </div> 
 </div>
 
 <div id="miModal" class="modal" *ngIf="abrir">
     <div class="modal-contenido">
         <span class="cerrar-modal" id="cerrarModalBtn" (click)="cerrar()">&times;</span>
-        <h2 style="color: #D7E3FC; font-family: 'Monaco'; margin: 3%;">Deje un comentario acerca de su acción</h2>
-        <div class="input-field">
-            <input type="text" id="miInput" required name="com" [(ngModel)]="comentario" style="width: 65%;">
-            <label>Comentario</label>
+        <div *ngIf="resenia == ''">
+            <h2 style="color: #D7E3FC; font-family: 'Monaco'; margin: 3%;">Deje un comentario acerca de su acción</h2>
+            <div class="input-field">
+                <input type="text" id="miInput" required name="com" [(ngModel)]="comentario" style="width: 65%;">
+                <label>Comentario</label>
+            </div>
+            <button class="btnEspecialidades" id="obtenerDatoBtn" (click)="enviar()">Enviar</button>
         </div>
-        <button class="btnEspecialidades" id="obtenerDatoBtn" (click)="enviar()">Enviar</button>
+
+        <div *ngIf="resenia != ''">
+            <h2 style="color: #D7E3FC; font-family: 'Monaco'; margin: 3%; font-weight: bold;">Comentario</h2>
+            <h2 style="color: #D7E3FC; font-family: 'Monaco'; margin: 3%;">{{resenia}}</h2>
+        </div>
     </div>
 </div>

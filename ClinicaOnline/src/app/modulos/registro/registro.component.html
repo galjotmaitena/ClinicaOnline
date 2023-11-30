@@ -1,3 +1,13 @@
-<div class="registro-container"></div>
+<div class="registro-container">
+    <div *ngIf="!seleccionado" class="botones">
+        <button (click)="seleccionar()" routerLink="paciente">
+            <img src="assets/pac.jpg" alt="">
+        </button>
+        <button (click)="seleccionar()" routerLink="especialista">
+            <img src="assets/esp.jpg" alt="">
+        </button>
+    </div>
+
+</div>
 
 <router-outlet></router-outlet>

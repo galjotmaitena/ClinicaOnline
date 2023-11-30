@@ -1,0 +1,45 @@
+<div class="registro-container">
+    <nav>
+        <button style="background: transparent; border: transparent; position: absolute; height: 100%; z-index: 1000;"  (click)="volver()">
+            <img  id="icon" src="assets/signo-de-hospital.png" >
+        </button>
+        <h2 id="title">Mi Perfil</h2>
+        <div class="botones">
+            <button class="btnNav" *ngIf="userLogeado && tipo === 'especialista'" routerLink="/misHorarios">Mis horarios</button>
+        </div>         
+    </nav>
+
+    <div class="datos-container">
+        <div class="contenedor">
+            <img class="imagenUsuario" [src]='this.usuario.foto'>
+            <div style="margin: 7px; align-items: center; text-align:start; width: 30%;">
+                <h1 class="texto" style="font-weight: bold; font-size: 30px;">{{this.usuario != null ? this.usuario.nombre : ''}} {{this.usuario != null ? this.usuario.apellido : ''}}</h1>
+                <h1 class="texto">DNI: {{this.usuario != null ? this.usuario.dni : ''}}</h1>
+                <h1 class="texto">Edad: {{this.usuario != null ? this.usuario.edad : ''}}</h1>
+                <h1 class="texto" *ngIf="tipo === 'paciente'">Obra Social: {{this.usuario != null ? this.usuario.obraSocial : ''}}</h1>
+                
+            </div>
+            <div *ngIf="tipo === 'especialista'" style="width: 40%;">
+                <h1 class="texto" >Especialidades:</h1>
+                <div style="display: flex; flex-direction: row;">
+                    <div class="imagEspecialidades" *ngFor="let e of especialidades">
+                        <img style="margin: 3px; height: 60%; width: 60%;" src={{e.foto}}>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="usuario.tipo === 'paciente'" style="width: 40%;">
+                <div class="historial" *ngFor="let h of historial">
+                    <p>{{h.especialidad}} </p>
+                    <p>{{h.especialista}}</p>
+                    <p>{{h.fechaTurno}}</p>
+                    <p>{{h.altura}}</p>
+                    <p>{{h.peso}}</p>
+                    <p>{{h.temperatura}}</p>
+                    <p>{{h.presion}}</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
