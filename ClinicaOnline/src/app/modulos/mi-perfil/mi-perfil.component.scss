@@ -160,3 +160,52 @@ p{
     justify-content: center;
     margin: 0;
 }
+
+.usuario{
+    width: 90%;
+    height: 95%;
+    background: transparent;
+    margin: 3px;
+    margin-left: 10px;
+    margin-right: 10px;
+    flex-direction: row;
+    display: flex;
+    text-align: center;
+    justify-content: space-evenly;
+    align-items: center;
+    text-align: center;
+}
+
+th,
+td{
+    background: #ABC4FF;
+    border-bottom: 3px solid #64B5F6;
+    color: #002855; 
+    font-family: 'Monaco';
+    font-size: 20px;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    margin: 1px;
+    width: 33%;
+}
+
+.tTurnos{
+    margin: 5px;
+    height: 50%;
+    overflow-y: auto;
+}
+
+.tabla::-webkit-scrollbar {
+    width: 8px; /* Para navegadores WebKit (Chrome, Safari, etc.) */
+}
+  
+.tabla::-webkit-scrollbar-thumb {
+    background-color: #002855; /* Color del pulgar del scrollbar */
+    border-radius: 20px;
+}
+  
+.tabla::-webkit-scrollbar-track {
+    background-color: #0466C8; /* Color de la pista del scrollbar */
+    border-radius: 20px;
+}

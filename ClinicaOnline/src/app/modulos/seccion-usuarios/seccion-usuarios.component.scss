@@ -82,7 +82,7 @@ nav{
     height: 70%;
     background: #64B5F6;
     border-radius: 20px;
-    justify-content:flex-start;
+    justify-content:center;
     align-items: center;
     left: 10%;
     top: 18%;
@@ -119,9 +119,9 @@ nav{
 }
 
 .foto{
-    width: 10%;
-    height: 85%;
-    margin: 3px;
+    width: 30%;
+    height: 30%;
+    //margin: 3px;
 }
 
 .contenedor-input{
@@ -170,7 +170,7 @@ input:valid ~ label{
     left: 6%;
     font-size: 16px;
     padding: 0 2px;
-    background: #0466C8;
+    background: #64B5F6;
 }
 
 .input-field input:placeholder-shown + label {
@@ -178,7 +178,7 @@ input:valid ~ label{
   }
   
   .input-field input:focus + label {
-    background: #0466C8;
+    background: #64B5F6;
   }
 
 .texto{
@@ -286,12 +286,12 @@ input:valid ~ label{
     position: relative;
     width: 45%;
     height: auto;
-    background: #64B5F6;
+    //background: #64B5F6;
     border-radius: 5%;
     justify-content: center;
     align-items: center;
-    left: 30%;
-    top: 18%;
+    //left: 30%;
+    //top: 18%;
 }
 
 #icon{
@@ -318,4 +318,71 @@ p{
     text-align: start;
     justify-content: center;
     margin: 0;
+}
+
+.fav-button {
+    width: 13%;
+    height: 31%;
+    border-radius: 50%;
+    background-color: #90CAF9; /* Cambia esto al color que desees */
+    color: #002855; 
+    font-family: 'Monaco';
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    margin: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+}
+
+.contenedorFavs{
+    width: 80%;
+    height: 70%;
+    background: #64B5F6;
+    border-radius: 20px;
+    justify-content:center;
+    align-items: center;
+    left: 10%;
+    top: 18%;
+    display: flex; 
+    position: relative; 
+    justify-content: space-evenly; 
+    flex-wrap: wrap; 
+}
+
+.fotoFav{
+    width: 55%;
+    height: auto;
+}
+
+.pFav{
+    color: #002855; 
+    font-family: 'Monaco';
+    font-size: 16px;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    margin: 0;
+}
+
+
+
+th,
+td{
+    background: #ABC4FF;
+    border-bottom: 3px solid #64B5F6;
+    color: #002855; 
+    font-family: 'Monaco';
+    font-size: 20px;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    margin: 1px;
+}
+
+table{
+    justify-content: start;
 }

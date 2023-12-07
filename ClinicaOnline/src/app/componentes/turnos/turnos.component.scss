@@ -107,12 +107,12 @@ nav{
     display: flex; 
     position: absolute;
     width: 60%;
-    height: 50%;
+    height: 70%;
     background: #64B5F6;
     border-radius: 20px;
     justify-content: center;
     align-items: center;
-    top: 30%;
+    top: 20%;
     left: 20%;
 }
 
@@ -199,7 +199,7 @@ p{
 
 .usuario{
     width: 90%;
-    height: 9%;
+    height: 50%;
     background: #ABC4FF;
     margin: 3px;
     margin-left: 10px;
@@ -210,6 +210,7 @@ p{
     justify-content: space-around;
     align-items: center;
     text-align: center;
+    overflow-y: auto;
 }
 
 
@@ -307,4 +308,38 @@ input:valid ~ label{
 
 .input-field input:focus + label {
   background: #979DAC;
+}
+
+th,
+td{
+    background: #ABC4FF;
+    border-bottom: 3px solid #64B5F6;
+    color: #002855; 
+    font-family: 'Monaco';
+    font-size: 20px;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    margin: 1px;
+    width: 17%;
+}
+
+.tTurnos{
+  width: 100%;
+  overflow-y: auto;
+  height: 70%;
+}
+
+.usuario::-webkit-scrollbar {
+  width: 8px; /* Para navegadores WebKit (Chrome, Safari, etc.) */
+}
+
+.usuario::-webkit-scrollbar-thumb {
+  background-color: #002855; /* Color del pulgar del scrollbar */
+  border-radius: 20px;
+}
+
+.usuario::-webkit-scrollbar-track {
+  background-color: #0466C8; /* Color de la pista del scrollbar */
+  border-radius: 20px;
 }

@@ -35,6 +35,7 @@ export class TurnosComponent {
 
   ngOnInit()
   {
+    this.turnos = [];
     if(this.auth)
     {
       this.userLogeado = true;

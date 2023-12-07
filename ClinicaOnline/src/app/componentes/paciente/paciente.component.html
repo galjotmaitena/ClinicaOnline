@@ -24,16 +24,37 @@
         </div>
     </div> 
 
-    <div class="usuario" *ngFor="let t of turnos">
-        <p>{{t.especialidad}} </p>
-        <p>{{t.apellidoEspecialista}}</p>
-        <p>{{t.dia}}</p>
-        <p>{{t.hora}}</p>
-
-        <button class="btnEspecialidades" *ngIf="!t.realizado && !t.cancelado" (click)="cambiarEstado(t, 'cancelar')">Cancelar</button>
-        <button class="btnEspecialidades" *ngIf="t.resenia !== ''" (click)="cambiarEstado(t, 'resenia')">Reseña</button>
-        <button class="btnEspecialidades" *ngIf="t.resenia !== '' && t.realizado" (click)="cambiarEstado(t, 'encuesta')">Encuesta</button>
-        <button class="btnEspecialidades" *ngIf="t.realizado" (click)="cambiarEstado(t, 'calificar')">Calificar Atencion</button>
+    <div class="usuario" >
+        <table class="tTurnos">
+            <tr>
+                <th>Especialidad</th>
+                <th>Especialista</th>
+                <th>Día</th>
+                <th>Hora</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr *ngFor="let t of turnos">
+                <td><p>{{t.especialidad}}</p></td>
+                <td><p>{{t.apellidoEspecialista}}</p></td>
+                <td><p>{{t.dia}}</p></td>
+                <td><p>{{t.hora}}</p></td>
+                <td>        
+                    <button class="btnEspecialidades" *ngIf="!t.finalizado && !t.cancelado" (click)="cambiarEstado(t, 'cancelar')">Cancelar</button>
+                </td>
+                <td>        
+                    <button class="btnEspecialidades" *ngIf="t.resenia !== ''" (click)="cambiarEstado(t, 'resenia')">Reseña</button>
+                </td>
+                <td>        
+                    <button class="btnEspecialidades" *ngIf="t.resenia !== '' && t.finalizado" (click)="cambiarEstado(t, 'encuesta')">Encuesta</button>
+                </td>
+                <td>        
+                    <button class="btnEspecialidades" *ngIf="t.finalizado" (click)="cambiarEstado(t, 'calificar')">Calificar Atencion</button>
+                </td>
+            </tr>
+        </table>
     </div> 
 </div>
 

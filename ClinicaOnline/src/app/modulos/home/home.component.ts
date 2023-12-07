@@ -11,27 +11,26 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 export class HomeComponent {
 
   esAdmin = false;
-  usuario = this.authService.getUser()?.email;
+  usuario : any = '';
   userLogeado = false;
-  tipo : string = '';
 
   constructor(private authService : AuthService, private firestoreService : FirestoreService, private router : Router){}
 
   ngOnInit()
   {
-    if(this.usuario)
-    {
-      this.userLogeado = true;
+    this.firestoreService.traer('usuarios').subscribe((data)=>{
+      if(this.authService.getUser())
+      {
+        this.userLogeado = true;
 
-      this.firestoreService.traer('usuarios').subscribe((data)=>{
         data.forEach(u => {
-          if(this.usuario === u.correo)
+          if(this.authService.getUser()?.email === u.correo)
           {
-            this.tipo = u.tipo;
+            this.usuario = u;
           }
         });
-      });
-    }
+      }
+    });
   }
 
   logout()

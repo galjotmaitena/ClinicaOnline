@@ -5,6 +5,7 @@ import { RegistroRoutingModule } from './registro-routing.module';
 import { RegistroComponent } from './registro.component';
 import { FormsModule } from '@angular/forms';
 
+//import { ReCaptchaV3Module } from 'ng-recaptcha';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { FormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     RegistroRoutingModule,
-    FormsModule
+    FormsModule,
+    //ReCaptchaV3Module
   ]
 })
 export class RegistroModule { }

@@ -8,17 +8,82 @@
 
     <div class="datos-container">
         <div class="contenedor">
-            <div class="historial" *ngFor="let h of historial">
-                <p>{{h.especialidad}} </p>
-                <p>{{h.especialista}}</p>
-                <p>{{h.fechaTurno}}</p>
-                <p>{{h.altura}}</p>
-                <p>{{h.peso}}</p>
-                <p>{{h.temperatura}}</p>
-                <p>{{h.presion}}</p>
+            <div class="card">
+                <div id="demo" class="carousel slide" >
+                    <div class="carousel-inner" >
+                      <div class="carousel-item active "  *ngFor="let p of pacientes;let i = index" [class.active]="i === indiceActual">
+                        <div class="d-block prueba" style="width:100%; justify-content: center; align-items: center; text-align: center;">
+                            <div class="cardPaciente">
+                                <div style="width: 30%; height: 100%;">
+                                    <img class="foto" [src]="p.foto" alt="">
+                                </div>
+                                <div class="datosPaciente">
+                                    <h2 style="margin: 10px;">{{p.nombre}} {{p.apellido}}</h2>
+                                    <p>DNI: {{p.dni}}</p>
+                                    <p>Edad: {{p.edad}}</p>
+                                    <p>Obra Social: {{p.obraSocial}}</p>
+                                </div>
+                            </div>
+                        </div>
+                      
+                      </div>
+                    </div>
+                  
+                    
+                    <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev" (click)="cambiarPaciente(-1)">
+                      <span class="carousel-control-prev-icon"></span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next" (click)="cambiarPaciente(1)">
+                      <span class="carousel-control-next-icon"></span>
+                    </button>
+                </div>
             </div>
-
+            <div class="cTurnosHistorial">
+                <div class="turnos">
+                    <div class="cardTurnos">
+                        <table class="tablaTurnos">
+                            <tr>
+                                <th>Día</th>
+                                <th>Especialista</th>
+                                <th>Especialidad</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                            <tr *ngFor="let t of turnosPaciente" >
+                                <td>{{t.dia}}</td>
+                                <td>{{t.apellidoEspecialista}}</td>
+                                <td>{{t.especialidad}}</td>
+                                <td><button class="btnsTable" (click)="comentario = t.resenia; verComentario = true; verHistorial = false;">Comentario</button></td>
+                                <td><button class="btnsTable" (click)="buscarHistorial(t.dia)">Historial</button></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="historial">
+                    <div class="cardTurnos" *ngIf="verHistorial">
+                        <h2 class="texto">Historial Clinico</h2>
+                        <div style="width: 100%; display: flex; flex-direction: row; justify-content: space-evenly; text-align: center;">
+                            <p>Altura: {{this.historial != null ? this.historial.altura : ''}}</p>
+                            <p>Peso: {{this.historial != null ? this.historial.peso : ''}}</p>
+                        </div>
+                        <div style="width: 100%; display: flex; flex-direction: row; justify-content: space-evenly; text-align: center;">
+                            <p>Temperatura: {{this.historial != null ? this.historial.temperatura : ''}}</p>
+                            <p>Presión: {{this.historial != null ? this.historial.presion : ''}}</p>
+                        </div>
+                        <div style="width: 100%; display: flex; flex-direction: row; justify-content: space-evenly; text-align: center;">
+                            <p>{{this.historial != null ? this.historial.clave1 : ''}}: {{this.historial != null ? this.historial.valor1 : ''}}</p>
+                            <p>{{this.historial != null ? this.historial.clave2 : ''}}: {{this.historial != null ? this.historial.valor2 : ''}}</p>
+                        </div>
+                    </div>
+                    <div class="cardTurnos" *ngIf="verComentario">
+                        <h2 class="texto">Comentario</h2>
+                        <p>{{comentario}}</p>
+                    </div>
+                    <div class="cardTurnos" *ngIf="!verComentario && !verHistorial">
+                        <h2 class="texto">Seleccione un turno para visualizar su historial o comentario.</h2>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
 </div>

@@ -1,16 +1,16 @@
 
 .contenedor{
-    flex-direction: column; 
-    display: flex; 
-    position: absolute;
-    width: 60%;
-    height: 50%;
-    background: #64B5F6;
-    border-radius: 20px;
-    justify-content: center;
-    align-items: center;
-    top: 30%;
-    left: 20%;
+  flex-direction: column; 
+  display: flex; 
+  position: absolute;
+  width: 60%;
+  height: auto;
+  background: #64B5F6;
+  border-radius: 20px;
+  justify-content: center;
+  align-items: center;
+  top: 30%;
+  left: 20%;
 }
 
 /* Estilizar el input checkbox para ocultarlo */
@@ -204,4 +204,23 @@ input:valid ~ label{
 
 .input-field input:focus + label {
   background: #979DAC;
+}
+
+
+th,
+td{
+    background: #ABC4FF;
+    border-bottom: 3px solid #64B5F6;
+    color: #002855; 
+    font-family: 'Monaco';
+    font-size: 20px;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    margin: 1px;
+    width: 13%;
+}
+
+table{
+  width: 100%;
 }

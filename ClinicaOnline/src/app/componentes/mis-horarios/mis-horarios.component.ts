@@ -141,6 +141,7 @@ export class MisHorariosComponent {
       this.especialidad = '';
 
       Swal.fire("Listo!", "Disponibilidad horaria asignada correctamente...", "success");
+      this.router.navigate(['/home']);
     }
     else
     {

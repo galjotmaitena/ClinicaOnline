@@ -37,6 +37,11 @@ export class EspecialistaComponent {
   temperatura : number | null = null;
   presion : number | null = null;
 
+  campo1 : string | null = null;
+  campo2 : string | null = null;
+  valor1 : string | null = null;
+  valor2 : string | null = null;
+
   mostrarHistoria : boolean = false;
   mostrarComentario : boolean = false;
 
@@ -208,31 +213,99 @@ export class EspecialistaComponent {
   enviar(datos : string)
   {
     let pac : any;
+    let cargado = false;
 
     if(datos === 'historia' && this.accion === 'finalizar')
     {
       if(this.altura !== null && this.peso !== null && this.temperatura !== null && this.presion !== null && this.resenia !== '')
       {
         this.pacientes.forEach((u : any) => {
-            if(u.tipo === 'paciente' && u.dni === this.turno.dniPaciente)
-            {
-              pac = u;
-              //console.log(u);
-            }
-          });
+          if(u.tipo === 'paciente' && u.dni === this.turno.dniPaciente)
+          {
+            pac = u;
+          }
+        });
 
-          console.log(pac);
-          let objHistoria = {altura:this.altura, peso:this.peso, temperatura:this.temperatura, presion:this.presion, fechaTurno:this.turno.dia, especialidad:this.turno.especialidad, especialista:this.turno.apellidoEspecialista};
+        let objHistoria;
+
+        if(this.campo1 !== null && this.valor1 !== null && this.campo2 !== null && this.valor2 !== null)
+        {
+          objHistoria = { altura:this.altura, 
+                          peso:this.peso, 
+                          temperatura:this.temperatura, 
+                          presion:this.presion, 
+                          fechaTurno:this.turno.dia, 
+                          especialidad:this.turno.especialidad, 
+                          especialista:this.turno.apellidoEspecialista, 
+                          clave1 : this.campo1, 
+                          valor1 : this.valor1,
+                          clave2 : this.campo2,
+                          valor2 : this.valor2};
+          cargado = true;
+        }
+        else
+        {
+          if(this.campo1 === null && this.valor1 === null && this.campo2 === null && this.valor2 === null)
+          {
+            objHistoria = { altura:this.altura, 
+                            peso:this.peso, 
+                            temperatura:this.temperatura, 
+                            presion:this.presion, 
+                            fechaTurno:this.turno.dia, 
+                            especialidad:this.turno.especialidad, 
+                            especialista:this.turno.apellidoEspecialista};
+            cargado = true;
+          }
+          else
+          {
+            if(this.campo2 !== null && this.valor2 !== null)
+            {
+              objHistoria = { altura:this.altura, 
+                              peso:this.peso, 
+                              temperatura:this.temperatura, 
+                              presion:this.presion, 
+                              fechaTurno:this.turno.dia, 
+                              especialidad:this.turno.especialidad, 
+                              especialista:this.turno.apellidoEspecialista, 
+                              clave2 : this.campo2,
+                              valor2 : this.valor2};
+              cargado = true;
+            }
+            else
+            {
+              if(this.campo1 !== null && this.valor1 !== null)
+              {
+                objHistoria = { altura:this.altura, 
+                                peso:this.peso, 
+                                temperatura:this.temperatura, 
+                                presion:this.presion, 
+                                fechaTurno:this.turno.dia, 
+                                especialidad:this.turno.especialidad, 
+                                especialista:this.turno.apellidoEspecialista, 
+                                clave1 : this.campo1,
+                                valor1 : this.valor1};
+                cargado = true;
+              }
+            }
+          }
+        }
+
+        if(cargado)
+        {
           pac.historialClinico.push(JSON.stringify(objHistoria));
-  
+
           this.firestoreService.modificar('usuarios', pac);
           
           this.turno.resenia = this.resenia;
           this.turno.finalizado = true;
   
           Swal.fire("Listo!", "Los datos del paciente se cargaron correctamente...", "success");
-       
-
+          cargado = false;
+        }
+        else
+        {
+          Swal.fire("Error!", "Falta completar algun campo opcional...", "error");
+        }
       }
       else
       {

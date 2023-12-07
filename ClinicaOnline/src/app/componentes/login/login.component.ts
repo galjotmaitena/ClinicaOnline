@@ -22,13 +22,15 @@ export class LoginComponent {
   especialistas : any[] = [];
   observable : any;
   esEspecialista = false;
-  usuario : any = '';
+  usuario : any;
 
   btnsE : any[] = [];
   btnsP : any[] = [];
   btnsA : any[] = [];
   oP : any;
   oA : any;
+
+  usuarios : any[] = [];
 
   accesos : any[] = [];
   correos : any[] = ['galjotmaitena@gmail.com', 'maitegaljot02@gmail.com', 'maitebordolina02@gmail.com', 'maitenagaljot@hotmail.com'];
@@ -44,6 +46,7 @@ export class LoginComponent {
   ngOnInit()
   {
     this.observable = this.firestoreService.traer('usuarios').subscribe((data) => {
+      this.usuarios = data;
       data.forEach(u => {
         if(u.tipo === 'especialista')
         {
@@ -83,10 +86,11 @@ export class LoginComponent {
       {
         
         this.authService.login(this.correo, this.clave)
-        ?.then(()=>{
+        ?.then( ()=>{
     
           if(this.authService.getUser()?.emailVerified)
           {
+            this.guardarLog();
             this.correo = '';
             this.clave = '';
             setTimeout(() => {
@@ -112,9 +116,22 @@ export class LoginComponent {
             console.log("ERROR: ", error);
             this.mostrarToast = false;
           }, 2000);
-    
         })
-      }
+      }   
+  }
+
+  guardarLog()
+  {
+    this.usuarios.forEach(u => {
+      if(this.correo === u.correo)
+        {
+          this.usuario = u;
+          let ingreso = new Date();
+          let log = {nombre: u.nombre, apellido: u.apellido, tipo: u.tipo, dia: `${ingreso.getDate()}/${ingreso.getMonth()+1}/${ingreso.getFullYear()}`, hora:  `${ingreso.getHours()}:${ingreso.getMinutes()}`};
+          this.firestoreService.guardar('ingresos', log);
+          console.log(log);
+        }
+    });
   }
 
   cargarDatos(user : string)
@@ -142,14 +159,13 @@ export class LoginComponent {
 
   traerFotos(correo : string)
   {
+    this.accesos = [];
     let observable = this.firestoreService.traer('usuarios').subscribe((data)=>{
-      
 
       data.forEach(u => {
         if(u.correo === correo)
         {
           this.accesos.push({'correo' : correo, 'foto' : u.foto});
-          console.log(this.accesos);
         }
       });
     })

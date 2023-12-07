@@ -27,15 +27,35 @@
                     </div>
                 </div>
             </div>
-            <div *ngIf="usuario.tipo === 'paciente'" style="width: 40%;">
-                <div class="historial" *ngFor="let h of historial">
-                    <p>{{h.especialidad}} </p>
-                    <p>{{h.especialista}}</p>
-                    <p>{{h.fechaTurno}}</p>
-                    <p>{{h.altura}}</p>
-                    <p>{{h.peso}}</p>
-                    <p>{{h.temperatura}}</p>
-                    <p>{{h.presion}}</p>
+            <div *ngIf="usuario.tipo === 'paciente'" style="width: 40%; height: 100%; justify-content: center; align-items: center;">
+                <div class="usuario" style="height: 100%; flex-direction: column; justify-content: center; align-items: center;">
+                    <table class="tTurnos" >
+                        <tr>
+                            <th>Especialidad</th>
+                            <th>Especialista</th>
+                            <th>Día</th>
+                        </tr>
+                        <tr *ngFor="let h of historial" (click)="historialSeleccionado = h">
+                            <td>{{h.especialidad}}</td>
+                            <td>{{h.especialista}}</td>
+                            <td>{{h.fechaTurno}}</td>
+                        </tr>
+                    </table>
+                    <div *ngIf="historialSeleccionado != null" style="height: auto; width: 90%; flex-direction: column; border: 3px solid #ABC4FF; margin: 1px; margin: 5px;">
+                        <p style="font-weight: bold; margin: 3px;">Historia Clínica</p>
+                        <div style="display: flex; flex-direction: row;">
+                            <p class="dPaciente" style="margin-left: 3px; width: 50%;">Altura: {{this.historialSeleccionado != null ? this.historialSeleccionado.altura : ''}}</p>
+                            <p class="dPaciente" style="margin-left: 3px; width: 50%;">Peso: {{this.historialSeleccionado != null ? this.historialSeleccionado.peso : ''}}</p>
+                        </div>
+                        <div style="display: flex; flex-direction: row;">
+                            <p class="dPaciente" style="margin-left: 3px; width: 50%;">Temperatura: {{this.historialSeleccionado != null ? this.historialSeleccionado.temperatura : ''}}</p>
+                            <p class="dPaciente" style="margin-left: 3px; width: 50%;">Presión: {{this.historialSeleccionado != null ? this.historialSeleccionado.presion : ''}}</p>
+                        </div>
+                        <div style="display: flex; flex-direction: row;">
+                            <p class="dPaciente" style="margin-left: 3px; width: 50%;">{{this.historialSeleccionado != null ? this.historialSeleccionado.clave1 : ''}}: {{this.historialSeleccionado != null ? this.historialSeleccionado.valor1 : ''}}</p>
+                            <p class="dPaciente" style="margin-left: 3px; width: 50%;">{{this.historialSeleccionado != null ? this.historialSeleccionado.clave2 : ''}}: {{this.historialSeleccionado != null ? this.historialSeleccionado.valor2 : ''}}</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 

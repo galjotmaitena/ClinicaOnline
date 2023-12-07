@@ -169,7 +169,7 @@ export class SolicitarTurnoComponent {
       {
         if(fechaActual.getDay() === this.dias[j])
         {
-          this.fechasProximas.push(fechaActual.toLocaleDateString([], { day: '2-digit', month: '2-digit' }));
+          this.fechasProximas.push(fechaActual.toLocaleDateString([], { day: '2-digit', month: 'numeric', year: 'numeric' }));
         }
       }
     }

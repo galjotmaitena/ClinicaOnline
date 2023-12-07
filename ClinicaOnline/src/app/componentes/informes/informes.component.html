@@ -1,0 +1,81 @@
+<script src="https://unpkg.com/chart.js-plugin-labels-dv/dist/chartjs-plugin-labels.min.js"></script>
+
+<div class="registro-container">
+    <nav>
+        <button style="background: transparent; border: transparent; position: absolute; height: 100%; z-index: 1000;"  (click)="volver()">
+            <img  id="icon" src="assets/signo-de-hospital.png" >
+        </button>
+        <h2 id="title">Estadísticas</h2>
+        <div class="botones">
+            
+        </div>         
+    </nav>
+
+    <div class="contenedor">
+        <div class="logs">
+            <h1 class="texto">Ingresos al Sistema</h1>
+            <div class="tabla">
+                <table>
+                    <tr>
+                        <th>Usuario</th>
+                        <th>Tipo</th>
+                        <th>Día</th>
+                        <th>Hora</th>
+                    </tr>
+                    <tr *ngFor="let l of logs">
+                        <td>{{l.apellido}} {{l.nombre}}</td>
+                        <td>{{l.tipo}}</td>
+                        <td>{{l.dia | date:'dd/MM'}}</td>
+                        <td>{{l.hora}}</td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+        <div class="graficos">
+            <h1 class="texto">Gráficos</h1>
+            <div class="contGraficos">
+                <div id="turnosPorEspecialidad" class="cuadroGrafico">
+                    <p style="font-weight: bold; font-size: 10px;"> {{'Cantidad de turnos por especialidad.' | uppercase}}</p>
+                    <canvas class="miCanvas" id="bar" width="400" height="400"></canvas>
+                </div>
+                <button class="btnDescargar" (click)="armarPDF('turnosPorEspecialidad')">
+                    <img style="margin: 3px; height: 70%; width: 70%;" src="assets/descargar.png" alt="">
+                </button>
+
+                <div id="turnosPorDia" class="cuadroGrafico">
+                    <p style="font-weight: bold; font-size: 10px;">{{'Cantidad de turnos por día.' | uppercase}}</p>
+                    <canvas class="miCanvas"  id="line" width="400" height="400"></canvas>
+
+                </div>
+                <button class="btnDescargar" (click)="armarPDF('turnosPorDia')">
+                    <img style="margin: 3px; height: 70%; width: 70%;" src="assets/descargar.png" alt="">
+                </button>
+
+            </div>
+            <div class="contGraficos">
+                <div id="turnosSolicitados" class="cuadroGrafico">
+                    <p style="font-weight: bold; font-size: 10px;">{{'Cantidad de turnos solicitado por medico en 7 días.' | uppercase}}</p>
+                    <canvas class="miCanvas" id="pie" width="400" height="400"></canvas>
+
+                </div>
+                <button class="btnDescargar" (click)="armarPDF('turnosSolicitados')">
+                    <img style="margin: 3px; height: 70%; width: 70%;" src="assets/descargar.png" alt="">
+                </button>
+
+                <div id="turnosFinalizados" class="cuadroGrafico">
+                    <p style="font-weight: bold; font-size: 10px;">{{'Cantidad de turnos finalizados por medico en 7 días.' | uppercase}}</p>
+                    <canvas class="miCanvas" id="pie2" width="400" height="400"></canvas>
+
+                </div>
+                <button class="btnDescargar" (click)="armarPDF('turnosFinalizados')">
+                    <img style="margin: 3px; height: 70%; width: 70%;" src="assets/descargar.png" alt="">
+                </button>
+
+            </div>
+        </div>
+    </div>
+      
+</div>
+
+

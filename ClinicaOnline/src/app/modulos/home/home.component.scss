@@ -37,7 +37,7 @@ nav{
 }
 
 .btnNav{
-    width: 15%;
+    width: 10%;
     font-family: "Monaco";
     font-size: 120%;
     color: #023E7D;
@@ -52,17 +52,19 @@ nav{
     margin-bottom: 1%;
 }
 
-.btnNav:hover{
-    background-color: #64B5F6;
-    color: #023E7D;
-    font-weight: bold;
-}
+// .btnNav:hover{
+//     background-color: #64B5F6;
+//     color: #023E7D;
+//     font-size: 110%;
+//     font-weight: bold;
+// }
 
-.btnNav:active{
-    background-color: #90CAF9;
-    color: #023E7D;
-    font-weight: bold;
-}
+// .btnNav:active{
+//     background-color: #90CAF9;
+//     color: #023E7D;
+//     font-size: 110%;
+//     font-weight: bold;
+// }
 
 .btnUser{
     background-color: transparent;

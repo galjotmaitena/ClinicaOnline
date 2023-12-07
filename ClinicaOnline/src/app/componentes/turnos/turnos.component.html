@@ -35,13 +35,28 @@
             </div>
         </div> 
     
-        <div class="usuario" *ngFor="let t of turnos">
-            <p>{{t.especialidad}} </p>
-            <p>{{t.apellidoEspecialista}}</p>
-            <p>{{t.apellidoPaciente}}</p>
-            <p>{{t.dia}}</p>
-            <p>{{t.hora}}</p>
-            <button class="btnEspecialidades" *ngIf="!t.realizado && !t.aceptado && !t.realizado && !t.cancelado" (click)="abrirModal(t)">Cancelar</button>
+        <div class="usuario">
+            <table class="tTurnos">
+                <tr>
+                    <th>Especialidad</th>
+                    <th>Especialista</th>
+                    <th>Paciente</th>
+                    <th>Día</th>
+                    <th>Hora</th>
+                    <th></th>
+                </tr>
+                <tr *ngFor="let t of turnos">
+                    <td><p>{{t.especialidad}}</p></td>
+                    <td><p>{{t.apellidoEspecialista}}</p></td>
+                    <td><p>{{t.apellidoPaciente}}</p></td>
+                    <td><p>{{t.dia | date:'dd/MM'}}</p></td>
+                    <td><p>{{t.hora}}</p></td>
+                    <td>        
+                        <button class="btnEspecialidades" *ngIf="(t.aceptado) || (!t.finalizado && !t.cancelado && !t.rechazado)" (click)="abrirModal(t)">Cancelar</button>
+                    </td>
+                </tr>
+            </table>
+            <!-- <button class="btnEspecialidades" *ngIf="t.aceptado && !t.finalizado && !t.cancelado && !t.rechazado" (click)="abrirModal(t)">Cancelar</button> -->
         </div> 
     </div>
     

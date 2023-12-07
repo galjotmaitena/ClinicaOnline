@@ -21,6 +21,8 @@ export class MiPerfilComponent {
 
   historial : any[] = [];
 
+  historialSeleccionado : any;
+
   constructor(private authService : AuthService, private firestoreService : FirestoreService, private router : Router){}
 
   ngOnInit()

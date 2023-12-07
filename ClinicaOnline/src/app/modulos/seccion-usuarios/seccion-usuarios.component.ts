@@ -6,6 +6,11 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 import { FormBuilder, FormGroup, Validators, AbstractControl, ValidatorFn, MinLengthValidator } from '@angular/forms';
 import { Router } from '@angular/router';
 
+import * as FileSaver from 'file-saver';
+import * as XLSX from 'xlsx';
+const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+const EXCEL_EXTENSION = '.xlsx';
+
 
 @Component({
   selector: 'app-seccion-usuarios',
@@ -43,6 +48,9 @@ export class SeccionUsuariosComponent {
   historial : any[] = [];
   diaHistorial : any;
 
+
+  turnos : any[] = [];
+
   constructor(private aFirestorage : AngularFireStorage,  private authService : AuthService, private firestoreService : FirestoreService, private formBuilder: FormBuilder, private router : Router)
   {
     this.form = this.formBuilder.group({
@@ -76,6 +84,10 @@ export class SeccionUsuariosComponent {
         }
       });
       console.log(data);
+    });
+
+    this.firestoreService.traer('turnos').subscribe((data)=>{
+      this.turnos = data;
     });
   }
 
@@ -151,8 +163,16 @@ export class SeccionUsuariosComponent {
     }
     else
     {
-      this.mostrarListado = false;
-      this.mostrarRegistro = true;
+      if(div === 'registro')
+      {
+        this.mostrarListado = false;
+        this.mostrarRegistro = true;
+      }
+      else
+      {
+        this.mostrarListado = false;
+        this.mostrarRegistro = false;
+      }
     }
   }
 
@@ -284,5 +304,63 @@ export class SeccionUsuariosComponent {
   volver()
   {
     this.router.navigate(['/home']);
+  }
+
+
+
+
+
+  armarExcel(paciente?: any)
+  {
+    let array: any[] = [];
+    let nombre = '';
+
+    if(paciente)
+    {
+      this.turnos.forEach(turno => {
+        if(turno.dniPaciente === paciente.dni)
+        {
+          array.push({resenia: turno.resenia, especialidad: turno.especialidad, paciente: turno.apellidoPaciente, especialista: turno.apellidoEspecialista, hora: turno.hora, dia: turno.dia});
+        }
+      });
+
+      nombre = `turnos_${paciente.dni}`;
+    }
+    else
+    {
+      this.turnos.forEach(turno => {
+
+        array.push({resenia: turno.resenia, especialidad: turno.especialidad, paciente: turno.apellidoPaciente, especialista: turno.apellidoEspecialista, hora: turno.hora, dia: turno.dia, especialaidad : turno.especialidad});
+        
+      });
+      nombre = `turnos_completos`;
+    }
+
+    this.ExportarExcel(array, nombre);
+  }
+
+  
+  ExportarExcel(json: any[], excelFileName: string): void {
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(json);
+
+    const workbook: XLSX.WorkBook = {
+      Sheets: { data: worksheet },
+      SheetNames: ['data'],
+    };
+
+    const excelBuffer: any = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
+
+    this.guardarExcel(excelBuffer, excelFileName);
+  }
+
+  guardarExcel(buffer: any, fileName: string): void {
+    const data: Blob = new Blob([buffer], { type: EXCEL_TYPE });
+    FileSaver.saveAs(
+      data,
+      fileName + '_' + new Date().getTime() + EXCEL_EXTENSION
+    );
   }
 }
